@@ -40,23 +40,16 @@ export const Config = {
 
 const tokenData = {
     accessToken: "",
-    expiry: 0,
-    refreshToken: "",
-    refreshExpiry: 0,
-    createdAt: "",      // for refresh token and access token
-    reCreatedAt: ""    // only for newly generated access token
 };
 
 export type tokenType = typeof tokenData;
 
 export const userState: {
     tokens?: tokenType,
-    user: Record<string, any>,
-    displayName: string
+    role: string
 } = {
     tokens: undefined,
-    user: {},
-    displayName: ""
+    role: ""
 
 };
 

@@ -7,26 +7,15 @@ const userSlice = createSlice({
     reducers: {
         firstLogin: (state, action) => {
             state.tokens = action.payload.tokens;
-            state.user = action.payload.user;
-        },
-        login: (state, action) => {
-            if (state.tokens !== null) {
-                state.tokens = action.payload;
-            }
+            state.role = action.payload.role;
         },
         logout: (state) => {
             state.tokens = undefined;
-            state.user = userState.user;
+            state.role = '';
         },
-        setUserData: (state, action) => {
-            state.user = action.payload;
-        },
-        setDisplayName: (state, action) => {
-            state.displayName = action.payload;
-        }
     }
 
 });
 
-export const {firstLogin, setDisplayName, login, logout, setUserData} = userSlice.actions;
+export const {firstLogin, logout} = userSlice.actions;
 export default userSlice.reducer;
