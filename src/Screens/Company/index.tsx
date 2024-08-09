@@ -11,7 +11,6 @@ const GET_COMPANIES = gql`
             results {
                 id
                 companyName
-                endClient
                 signingAuthName
                 signingAuthEmail
                 signingAuthDesignation
@@ -38,11 +37,7 @@ const Index = () => {
             title: 'Company Name',
             dataIndex: 'companyName',
             key: 'companyName',
-        }, {
-            title: 'End Client',
-            dataIndex: 'endClient',
-            key: 'endClient',
-        }, {
+        },{
             title: 'Signing Auth Name',
             dataIndex: 'signingAuthName',
             key: 'signingAuthName',

@@ -31,6 +31,7 @@ const GET_VENDOR = gql`
             openings {
                 id
                 name
+                endClient
                 suggestedRate {
                     otRate
                     rate

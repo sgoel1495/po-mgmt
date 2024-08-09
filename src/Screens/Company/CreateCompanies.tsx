@@ -67,9 +67,6 @@ const CreateCompanies = (props: { refetch: any }) => {
                     <Form.Item label="Company Name" required name={'companyName'}>
                         <Input placeholder="Company Name"/>
                     </Form.Item>
-                    <Form.Item label="End Client" required name={'endClient'}>
-                        <Input placeholder="End Client"/>
-                    </Form.Item>
                     <Card title="Signing Authority" className={'mb-5 w-full'}>
                         <Form.Item label="Name" required name={'signingAuthName'}>
                             <Input placeholder="Name"/>

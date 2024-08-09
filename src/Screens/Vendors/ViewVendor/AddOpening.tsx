@@ -67,6 +67,9 @@ const AddOpening = (props: { vendorId?: string, refetch: any }) => {
                     <Form.Item label={'Name'} name={'name'} required>
                         <Input placeholder={'Name'}/>
                     </Form.Item>
+                    <Form.Item label="End Client" required name={'endClient'}>
+                        <Input placeholder="End Client"/>
+                    </Form.Item>
                     <Card title="Suggested Rate" className={'mb-5 w-full'}>
                         <Form.Item label={'Rate'} name={['suggestedRate', 'rate']} required>
                             <InputNumber placeholder={'Rate'} className={'w-full'} addonAfter={"$ / Hr"}/>

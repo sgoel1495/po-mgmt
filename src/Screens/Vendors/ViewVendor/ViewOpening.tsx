@@ -10,11 +10,13 @@ const ViewOpening = (props: { opening: any, companyId: string, vendorId: string,
                 <Descriptions
                     className={'flex-1'}
                     items={[
+                        {label: 'End Client', children: props.opening['endClient']},
                         {label: 'Rate', children: props.opening['suggestedRate']['rate'] + " $ / Hr"},
                         {label: 'OT Rate', children: props.opening['suggestedRate']['otRate'] + " $ / Hr"}
                     ]}
                 />
-                <AddCandidate companyId={props.companyId} vendorId={props.vendorId} openingId={props.opening.id} refetch={props.refetch}/>
+                <AddCandidate companyId={props.companyId} vendorId={props.vendorId} openingId={props.opening.id}
+                              refetch={props.refetch}/>
             </div>
             <ViewCandidates data={props.opening.candidates}/>
         </>

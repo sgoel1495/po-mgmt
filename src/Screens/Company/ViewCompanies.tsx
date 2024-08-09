@@ -7,7 +7,6 @@ const GET_COMPANY = gql`
     query QueryCompanyById($id: ObjectID) {
         company(id: $id) {
             companyName
-            endClient
             logo
             signingAuthName
             signingAuthEmail
@@ -34,11 +33,6 @@ const ViewCompanies = () => {
                         key: 'companyName',
                         label: 'Company Name',
                         children: data.company['companyName']
-                    },
-                    {
-                        key: 'endClient',
-                        label: 'End Client',
-                        children: data.company['endClient']
                     },
                     {
                         key: 'logo',
