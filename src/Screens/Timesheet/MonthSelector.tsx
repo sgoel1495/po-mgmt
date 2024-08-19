@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
 import {Button, Modal} from "antd";
 import {TimeSheet} from "../../gql/graphql";
-import _ from "lodash";
 
 const MonthSelector = (props: {
     startDate: string,

@@ -1,9 +1,10 @@
 import React from 'react';
 import {Descriptions} from "antd";
-import AddCandidate from "./AddCandidate";
-import ViewCandidates from "./ViewCandidates";
+import AddJoining from "../Joining/AddJoining";
+import ViewJoinings from "../Joining/ViewJoinings";
+import EditOpening from "./EditOpening";
 
-const ViewOpening = (props: { opening: any, companyId: string, vendorId: string, refetch: any }) => {
+const ViewOpening = (props: { opening: any, clientId: string, vendorId: string, refetch: any }) => {
     return (
         <>
             <div className={'flex'}>
@@ -15,10 +16,11 @@ const ViewOpening = (props: { opening: any, companyId: string, vendorId: string,
                         {label: 'OT Rate', children: props.opening['suggestedRate']['otRate'] + " $ / Hr"}
                     ]}
                 />
-                <AddCandidate companyId={props.companyId} vendorId={props.vendorId} openingId={props.opening.id}
-                              refetch={props.refetch}/>
+                <AddJoining clientId={props.clientId} vendorId={props.vendorId} openingId={props.opening.id}
+                            refetch={props.refetch}/>
+                <EditOpening refetch={props.refetch} openingId={props.opening.id}/>
             </div>
-            <ViewCandidates data={props.opening.candidates}/>
+            <ViewJoinings data={props.opening.joinings} refetch={props.refetch}/>
         </>
     );
 };

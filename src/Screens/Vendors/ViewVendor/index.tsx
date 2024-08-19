@@ -1,58 +1,15 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
-import {gql, useQuery} from "@apollo/client";
+import {useQuery} from "@apollo/client";
 import {Card, Descriptions, Tabs} from "antd";
-import {DescriptionsItemType} from "antd/es/descriptions";
-import AddOpening from "./AddOpening";
-import ViewOpening from "./ViewOpening";
+import AddOpening from "./Opening/AddOpening";
+import ViewOpening from "./Opening/ViewOpening";
+import {GET_VIEW_VENDOR} from "@common/gql/vendor";
 
-const GET_VENDOR = gql`
-    query QueryVendorById($id: ObjectID) {
-        vendor(id: $id) {
-            name
-            vendorId
-            addressLine1
-            addressLine2
-            addressLine3
-            einNumber
-            authSignName
-            authSignEmail
-            authSignDesig
-            paymentTerms
-            bank{
-                bankName
-                accountName
-                accountNumber
-            }
-            company {
-                id
-                companyName
-            }
-            openings {
-                id
-                name
-                endClient
-                suggestedRate {
-                    otRate
-                    rate
-                }
-                candidates {
-                    id
-                    name
-                    joiningDate
-                    paymentTerms
-                    actualStartDate
-                    contact
-                    manager
-                }
-            }
-        }
-    }
-`
 
 const Index = () => {
     const params = useParams()
-    const {loading, error, data, refetch} = useQuery(GET_VENDOR, {
+    const {loading, error, data, refetch} = useQuery(GET_VIEW_VENDOR, {
         variables: {id: params.id},
     });
     // @ts-ignore
@@ -72,8 +29,8 @@ const Index = () => {
                     },
                     {
                         key: 'company',
-                        label: 'Company',
-                        children: data.vendor['company']['companyName']
+                        label: 'Client',
+                        children: data.vendor['client']['companyName']
                     },
                     {
                         key: 'einNumber',
@@ -85,40 +42,67 @@ const Index = () => {
                         key: 'paymentTerms',
                         label: 'Payment Terms',
                         children: data.vendor['paymentTerms'] + " Days"
+                    },
+                    {
+                        key: 'address',
+                        label: 'Address',
+                        children: <>
+                            {data.vendor['addressLine1']}
+                            ,
+                            {data.vendor['addressLine2']}
+                            ,
+                            {data.vendor['addressLine3']}
+                        </>
                     }
                 ],
-                address: [
+                signingAuth: [
                     {
-                        key: 'addressLine1',
-                        label: 'Address Line 1',
-                        children: data.vendor['addressLine1']
+                        key: 'authSignName',
+                        label: 'Name',
+                        children: data.vendor['authSignName']
                     },
                     {
-                        key: 'addressLine2',
-                        label: 'Address Line 2',
-                        children: data.vendor['addressLine2']
+                        key: 'authSignEmail',
+                        label: 'Email',
+                        children: data.vendor['authSignEmail']
                     },
                     {
-                        key: 'addressLine3',
-                        label: 'Address Line 3',
-                        children: data.vendor['addressLine3']
+                        key: 'authSignDesig',
+                        label: 'Designation',
+                        children: data.vendor['authSignDesig']
                     }
                 ],
                 bank: [
                     {
                         key: 'name',
                         label: 'Bank Name',
-                        children: data.vendor['bankName']
+                        children: data.vendor['bank']['bankName']
                     },
                     {
                         key: 'accountName',
                         label: 'Account Name',
-                        children: data.vendor['accountName']
+                        children: data.vendor['bank']['accountName']
                     },
                     {
                         key: 'accountNumber',
                         label: 'Account Number',
-                        children: data.vendor['accountNumber']
+                        children: data.vendor['bank']['accountNumber']
+                    },
+                    {
+                        key: 'routingNumber',
+                        label: 'Routing Number',
+                        children: data.vendor['bank']['routingNumber']
+                    },
+                    {
+                        key: 'address',
+                        label: 'Address',
+                        children: <>
+                            {data.vendor['bank']['addressLine1']}
+                            ,
+                            {data.vendor['bank']['addressLine2']}
+                            ,
+                            {data.vendor['bank']['addressLine3']}
+                        </>
                     }
                 ]
             }
@@ -129,16 +113,13 @@ const Index = () => {
     // @ts-ignore
     return (
         <>
-            <Descriptions title="Vendor Info" items={items.main} layout={'vertical'} column={5} bordered/>
+            <Descriptions title="Staffing Company Info" items={items.main} layout={'vertical'} column={5} bordered/>
             <div className={'my-4 flex justify-between gap-5'}>
-                <Card title="Address">
-                    <Descriptions items={items.address} layout={'vertical'} column={2}/>
+                <Card title="Signing Authority" className={'flex-[2]'}>
+                    <Descriptions items={items.signingAuth} layout={'vertical'} column={2}/>
                 </Card>
-                <Card title="Signing Authority">
-                    <Descriptions items={items.address} layout={'vertical'} column={2}/>
-                </Card>
-                <Card title="Bank">
-                    <Descriptions items={items.address} layout={'vertical'} column={2}/>
+                <Card title="Bank" className={'flex-[3]'}>
+                    <Descriptions items={items.bank} layout={'vertical'} column={3}/>
                 </Card>
             </div>
             <Card
@@ -156,7 +137,7 @@ const Index = () => {
                             children: <ViewOpening
                                 refetch={refetch}
                                 opening={item}
-                                companyId={data.vendor.company.id}
+                                clientId={data.vendor.client.id}
                                 vendorId={params.id ? params.id : ''}
                             />,
                         };

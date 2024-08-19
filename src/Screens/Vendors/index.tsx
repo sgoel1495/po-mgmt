@@ -1,32 +1,19 @@
 import React from 'react';
 import {Button, Table} from "antd";
-import {gql, useQuery} from "@apollo/client";
+import {useQuery} from "@apollo/client";
 import CreateVendor from "./CreateVendor";
 import {EyeOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
+import EditVendor from "./EditVendor";
+import {GET_VENDORS} from "@common/gql/vendor";
 
-const GET_COMPANIES = gql`
-    query QueryVendor($pageNum: Int, $pageSize: Int) {
-        vendors(pageNum: $pageNum, pageSize: $pageSize) {
-            results {
-                id
-                name
-                authSignName
-                paymentTerms
-                company {
-                    companyName
-                }
-            }
-            total
-        }
-    }
-`
+
 
 const Index = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [pageSize, setPageSize] = React.useState(10);
-    const {loading, error, data, refetch} = useQuery(GET_COMPANIES, {
+    const {loading, error, data, refetch} = useQuery(GET_VENDORS, {
         variables: {
             pageNum: page,
             pageSize: pageSize
@@ -40,7 +27,7 @@ const Index = () => {
             key: 'name',
         }, {
             title: 'Company',
-            dataIndex: ['company', 'companyName'],
+            dataIndex: ['client', 'companyName'],
             key: 'companyName',
         }, {
             title: 'Auth Sign Name',
@@ -55,16 +42,18 @@ const Index = () => {
             dataIndex: 'id',
             key: 'id',
             render: (text: any) => {
-                return <Button onClick={() => navigate(text)} type="link">
+                return <><Button onClick={() => navigate(text)} type="link">
                     <EyeOutlined/>
                 </Button>
+                    <EditVendor refetch={refetch} vendorId={text}/>
+                </>
             }
         }
     ]
     return <Table
         title={() => {
             return <div className={'flex justify-between items-center'}>
-                <span className={'text-xl font-semibold'}>Vendors</span>
+                <span className={'text-xl font-semibold'}>Staffing</span>
                 <CreateVendor refetch={refetch}/>
             </div>
         }}

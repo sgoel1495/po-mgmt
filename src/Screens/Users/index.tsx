@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Modal, notification, Table} from "antd";
 import {gql, useMutation, useQuery} from "@apollo/client";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined} from "@ant-design/icons";
 import CreateUser from "./CreateUser";
 import EditUser from "./EditUser";
 

@@ -10,26 +10,26 @@ const GET_CANDIDATE = gql`
     query QueryBasicCandidateById($id: ObjectID) {
         candidate(id: $id) {
             name
-            empId
-            actualStartDate
-            company {
-                id
-                companyName
-            }
-            vendor {
-                id
-                name
-            },
-            projectName
-            projectLocation
-            timesheetApprover {
-                name
-                email
-            }
-            candidateRate {
-                otRate
-                rate
-            }
+#            empId
+#            actualStartDate
+#            client {
+#                id
+#                companyName
+#            }
+#            vendor {
+#                id
+#                name
+#            },
+#            projectName
+#            projectLocation
+#            timesheetApprover {
+#                name
+#                email
+#            }
+#            candidateRate {
+#                otRate
+#                rate
+#            }
         }
     }
 `
@@ -91,8 +91,8 @@ const Index = () => {
             },
             {
                 key: 'companyName',
-                label: 'Company',
-                children: data.candidate['company']['companyName'],
+                label: 'Client',
+                children: data.candidate['client']['companyName'],
             },
             {
                 key: 'projectName',

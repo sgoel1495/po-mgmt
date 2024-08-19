@@ -8,11 +8,13 @@ import Header from "./Header";
 import Vendors from "./Vendors";
 import Company from "./Company";
 import Candidates from "./Candidates";
-import ViewCompanies from "./Company/ViewCompanies";
+import ViewClient from "./Client/ViewClient";
 import ViewVendor from "./Vendors/ViewVendor";
 import ViewCandidate from './Candidates/ViewCandidate';
 import Timesheet from "./Timesheet";
 import Users from "./Users";
+import Client from "./Client";
+import ViewCompany from "./Company/ViewCompany";
 
 
 const Index = (props: { token: any, role: string }) => {
@@ -25,28 +27,34 @@ const Index = (props: { token: any, role: string }) => {
         },
         {
             key: 'vendors',
-            label: `Vendors`,
+            label: `Staffing`,
             path: '/vendors',
             element: <Vendors/>,
         },
         {
-            key: 'company',
-            label: `Company`,
-            path: '/company',
-            element: <Company/>,
+            key: 'client',
+            label: `Client`,
+            path: '/client',
+            element: <Client/>,
         },
         {
             key: 'candidates',
             label: `Candidates`,
             path: '/candidates',
             element: <Candidates/>,
+        },
+        {
+            key: 'company',
+            label: `Company`,
+            path: '/company',
+            element: <Company/>,
         }
     ];
 
     const navigationItems = [
         {
-            path: 'company/:id',
-            element: <ViewCompanies/>,
+            path: 'client/:id',
+            element: <ViewClient/>,
         },
         {
             path: 'vendors/:id',
@@ -59,6 +67,10 @@ const Index = (props: { token: any, role: string }) => {
         {
             path: 'candidates/:id/timesheet',
             element: <Timesheet/>,
+        },
+        {
+            path: 'company/:id',
+            element: <ViewCompany/>,
         }
     ]
     if (props.role === 'Admin')

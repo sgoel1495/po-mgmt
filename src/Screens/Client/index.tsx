@@ -1,18 +1,17 @@
 import React from 'react';
 import {Button, Table} from "antd";
 import {useQuery} from "@apollo/client";
+import CreateClient from "./CreateClient";
 import {EyeOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
-import CreateCandidate from "./CreateCandidate";
-import EditCandidate from "./EditCandidate";
-import {GET_CANDIDATES} from "@common/gql/candidate";
-
+import EditClient from "./EditClient";
+import {GET_CLIENTS} from "@common/gql/client";
 
 const Index = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [pageSize, setPageSize] = React.useState(10);
-    const {loading, error, data, refetch} = useQuery(GET_CANDIDATES, {
+    const {loading, error, data, refetch} = useQuery(GET_CLIENTS, {
         variables: {
             pageNum: page,
             pageSize: pageSize
@@ -21,21 +20,25 @@ const Index = () => {
 
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'Client Name',
+            dataIndex: 'companyName',
+            key: 'companyName',
         }, {
-            title: 'Email',
-            dataIndex: 'personalEmail',
-            key: 'personalEmail',
+            title: 'Signing Auth Name',
+            dataIndex: 'signingAuthName',
+            key: 'signingAuthName',
         }, {
-            title: 'Contact',
-            dataIndex: 'contact',
-            key: 'contact',
+            title: 'Signing Auth Email',
+            dataIndex: 'signingAuthEmail',
+            key: 'signingAuthEmail',
         }, {
-            title: 'Timezone',
-            dataIndex: 'timezone',
-            key: 'timezone',
+            title: 'Signing Designation',
+            dataIndex: 'signingAuthDesignation',
+            key: 'signingAuthDesignation',
+        }, {
+            title: 'Address',
+            dataIndex: 'addressLine1',
+            key: 'addressLine1',
         }, {
             title: 'Actions',
             dataIndex: 'id',
@@ -45,21 +48,20 @@ const Index = () => {
                     <Button onClick={() => navigate(text)} type="link">
                         <EyeOutlined/>
                     </Button>
-                    <EditCandidate candidateId={text} refetch={refetch}/>
+                    <EditClient clientId={text} refetch={refetch}/>
                 </>
             }
         }
     ]
     return <Table
         title={() => {
-
             return <div className={'flex justify-between items-center'}>
-                <span className={'text-xl font-semibold'}>Candidates</span>
-                <CreateCandidate refetch={refetch}/>
+                <span className={'text-xl font-semibold'}>Clients</span>
+                <CreateClient refetch={refetch}/>
             </div>
         }}
         columns={columns}
-        dataSource={error ? [] : data?.candidates.results}
+        dataSource={error ? [] : data?.clients.results}
         loading={loading}
         onChange={(page) => {
             setPage(page.current ?? 1)
@@ -68,7 +70,7 @@ const Index = () => {
         pagination={{
             current: page,
             pageSize: pageSize,
-            total: data?.candidates.total,
+            total: data?.clients.total,
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`
         }}
     />;

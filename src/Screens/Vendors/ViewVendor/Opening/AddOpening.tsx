@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, Card, Drawer, Form, Input, InputNumber, notification} from "antd";
+import {Button, Drawer, notification} from "antd";
 import {gql, useMutation} from "@apollo/client";
-import {OpeningInput} from "../../../gql/graphql";
+import {OpeningInput} from "../../../../gql/graphql";
+import OpeningForm from "@common/Forms/OpeningForm";
 
 const ADD_OPENING = gql`
     mutation AddOpening($data: OpeningInput!, $vendorId: String!) {
@@ -45,9 +46,11 @@ const AddOpening = (props: { vendorId?: string, refetch: any }) => {
                 vendorId: props.vendorId
             }
         }).then((resp) => {
-            setOpen(false)
-            formRef.current?.resetFields();
-            props.refetch();
+            if(resp.data.addOpening) {
+                setOpen(false)
+                formRef.current?.resetFields();
+                props.refetch();
+            }
         }).catch(() => {
         })
     }
@@ -63,28 +66,7 @@ const AddOpening = (props: { vendorId?: string, refetch: any }) => {
                 onClose={onClose}
                 open={open}
             >
-                <Form onFinish={onSubmit} layout="vertical" ref={formRef}>
-                    <Form.Item label={'Name'} name={'name'} required>
-                        <Input placeholder={'Name'}/>
-                    </Form.Item>
-                    <Form.Item label="End Client" required name={'endClient'}>
-                        <Input placeholder="End Client"/>
-                    </Form.Item>
-                    <Card title="Suggested Rate" className={'mb-5 w-full'}>
-                        <Form.Item label={'Rate'} name={['suggestedRate', 'rate']} required>
-                            <InputNumber placeholder={'Rate'} className={'w-full'} addonAfter={"$ / Hr"}/>
-                        </Form.Item>
-                        <Form.Item label={'OT Rate'} name={['suggestedRate', 'otRate']} required>
-                            <InputNumber placeholder={'OT Rate'} className={'w-full'} addonAfter={"$ / Hr"}/>
-                        </Form.Item>
-                    </Card>
-                    <div className={'w-full flex justify-end gap-5'}>
-                        <Button type={'primary'} loading={loading} htmlType={'submit'}>
-                            Save
-                        </Button>
-                        <Button htmlType={'reset'} loading={loading}>Reset</Button>
-                    </div>
-                </Form>
+                <OpeningForm formRef={formRef} loading={loading} onSubmit={onSubmit}/>
             </Drawer>
         </>
     );

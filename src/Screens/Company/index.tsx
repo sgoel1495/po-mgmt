@@ -1,9 +1,10 @@
 import React from 'react';
 import {Button, Table} from "antd";
 import {gql, useQuery} from "@apollo/client";
-import CreateCompanies from "./CreateCompanies";
-import {EyeOutlined} from "@ant-design/icons";
+import {CheckCircleOutlined, CloseCircleOutlined, EyeOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
+import CreateCompany from "./CreateCompany";
+import EditCompany from "./EditCompany";
 
 const GET_COMPANIES = gql`
     query QueryCompany($pageNum: Int, $pageSize: Int) {
@@ -11,10 +12,12 @@ const GET_COMPANIES = gql`
             results {
                 id
                 companyName
-                signingAuthName
-                signingAuthEmail
-                signingAuthDesignation
+                ownerName
                 addressLine1
+                bank {
+                    bankName
+                }
+
             }
             total
         }
@@ -34,33 +37,38 @@ const Index = () => {
 
     const columns = [
         {
-            title: 'Company Name',
+            title: 'Company',
             dataIndex: 'companyName',
             key: 'companyName',
-        },{
-            title: 'Signing Auth Name',
-            dataIndex: 'signingAuthName',
-            key: 'signingAuthName',
         }, {
-            title: 'Signing Auth Email',
-            dataIndex: 'signingAuthEmail',
-            key: 'signingAuthEmail',
+            title: 'Owner Name',
+            dataIndex: 'ownerName',
+            key: 'ownerName',
         }, {
-            title: 'Signing Designation',
-            dataIndex: 'signingAuthDesignation',
-            key: 'signingAuthDesignation',
-        }, {
-            title: 'Address',
+            title: 'Address Line',
             dataIndex: 'addressLine1',
             key: 'addressLine1',
+        }, {
+            title: 'Bank',
+            dataIndex: 'bank',
+            key: 'bank',
+            render: (bank: any) => {
+                if (bank?.bankName)
+                    return <CheckCircleOutlined className="text-green-500"/>
+                else
+                    return <CloseCircleOutlined className="text-red-500"/>;
+            }
         }, {
             title: 'Actions',
             dataIndex: 'id',
             key: 'id',
             render: (text: any) => {
-                return <Button onClick={() => navigate(text)} type="link">
-                    <EyeOutlined/>
-                </Button>
+                return <>
+                    <Button onClick={() => navigate(text)} type="link">
+                        <EyeOutlined/>
+                    </Button>
+                    <EditCompany refetch={refetch} companyId={text}/>
+                </>
             }
         }
     ]
@@ -68,7 +76,7 @@ const Index = () => {
         title={() => {
             return <div className={'flex justify-between items-center'}>
                 <span className={'text-xl font-semibold'}>Companies</span>
-                <CreateCompanies refetch={refetch}/>
+                <CreateCompany refetch={refetch}/>
             </div>
         }}
         columns={columns}

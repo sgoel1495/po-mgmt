@@ -213,60 +213,28 @@ export type BankInput = {
 
 export type Candidate = {
   __typename?: 'Candidate';
-  actualStartDate?: Maybe<Scalars['Date']['output']>;
   addressLine1?: Maybe<Scalars['String']['output']>;
   addressLine2?: Maybe<Scalars['String']['output']>;
   addressLine3?: Maybe<Scalars['String']['output']>;
-  bank: Bank;
-  candidateRate: Rate;
-  company?: Maybe<Company>;
-  companyName?: Maybe<Scalars['String']['output']>;
   contact?: Maybe<Scalars['PhoneNumber']['output']>;
-  empId?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['ObjectID']['output']>;
-  joiningDate?: Maybe<Scalars['Date']['output']>;
-  manager?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  officialEmail?: Maybe<Scalars['EmailAddress']['output']>;
-  paymentTerms?: Maybe<Scalars['Int']['output']>;
   personalEmail?: Maybe<Scalars['EmailAddress']['output']>;
-  projectLocation?: Maybe<Scalars['String']['output']>;
-  projectName?: Maybe<Scalars['String']['output']>;
-  timesheetApprover?: Maybe<Person>;
-  vendor?: Maybe<Vendor>;
-  vendorAcctSpoc: Person;
-  vendorRate: Rate;
-  vendorSpoc: Person;
+  timezone?: Maybe<Scalars['String']['output']>;
 };
 
 export type CandidateInput = {
-  actualStartDate?: InputMaybe<Scalars['Date']['input']>;
   addressLine1?: InputMaybe<Scalars['String']['input']>;
   addressLine2?: InputMaybe<Scalars['String']['input']>;
   addressLine3?: InputMaybe<Scalars['String']['input']>;
-  bank: BankInput;
-  candidateRate: RateInput;
-  company?: InputMaybe<Scalars['ObjectID']['input']>;
-  companyName?: InputMaybe<Scalars['String']['input']>;
   contact?: InputMaybe<Scalars['PhoneNumber']['input']>;
-  empId?: InputMaybe<Scalars['String']['input']>;
-  joiningDate?: InputMaybe<Scalars['Date']['input']>;
-  manager?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  officialEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
-  paymentTerms?: InputMaybe<Scalars['Int']['input']>;
   personalEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
-  projectLocation?: InputMaybe<Scalars['String']['input']>;
-  projectName?: InputMaybe<Scalars['String']['input']>;
-  timesheetApprover: PersonInput;
-  vendor?: InputMaybe<Scalars['ObjectID']['input']>;
-  vendorAcctSpoc: PersonInput;
-  vendorRate: RateInput;
-  vendorSpoc: PersonInput;
+  timezone?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Company = {
-  __typename?: 'Company';
+export type Client = {
+  __typename?: 'Client';
   addressLine1?: Maybe<Scalars['String']['output']>;
   addressLine2?: Maybe<Scalars['String']['output']>;
   addressLine3?: Maybe<Scalars['String']['output']>;
@@ -278,7 +246,7 @@ export type Company = {
   signingAuthName?: Maybe<Scalars['String']['output']>;
 };
 
-export type CompanyInput = {
+export type ClientInput = {
   addressLine1?: InputMaybe<Scalars['String']['input']>;
   addressLine2?: InputMaybe<Scalars['String']['input']>;
   addressLine3?: InputMaybe<Scalars['String']['input']>;
@@ -287,6 +255,26 @@ export type CompanyInput = {
   signingAuthDesignation?: InputMaybe<Scalars['String']['input']>;
   signingAuthEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
   signingAuthName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Company = {
+  __typename?: 'Company';
+  addressLine1?: Maybe<Scalars['String']['output']>;
+  addressLine2?: Maybe<Scalars['String']['output']>;
+  addressLine3?: Maybe<Scalars['String']['output']>;
+  bank: Bank;
+  companyName?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ObjectID']['output']>;
+  ownerName?: Maybe<Scalars['String']['output']>;
+};
+
+export type CompanyInput = {
+  addressLine1?: InputMaybe<Scalars['String']['input']>;
+  addressLine2?: InputMaybe<Scalars['String']['input']>;
+  addressLine3?: InputMaybe<Scalars['String']['input']>;
+  bank: BankInput;
+  companyName?: InputMaybe<Scalars['String']['input']>;
+  ownerName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DayTime = {
@@ -302,6 +290,63 @@ export type DayTimeInput = {
   standardHours?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type Joining = {
+  __typename?: 'Joining';
+  actualStartDate?: Maybe<Scalars['Date']['output']>;
+  candidate: Candidate;
+  candidateRate: Rate;
+  client: Client;
+  company?: Maybe<Company>;
+  empId?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ObjectID']['output']>;
+  joiningDate?: Maybe<Scalars['Date']['output']>;
+  officialEmail?: Maybe<Scalars['EmailAddress']['output']>;
+  paymentTerms?: Maybe<Scalars['Int']['output']>;
+  projectLocation?: Maybe<Scalars['String']['output']>;
+  projectName?: Maybe<Scalars['String']['output']>;
+  timesheetApprover?: Maybe<Person>;
+  vendor: Vendor;
+  vendorAcctSpoc?: Maybe<Person>;
+  vendorRate: Rate;
+  vendorSpoc?: Maybe<Person>;
+};
+
+export type JoiningInput = {
+  actualStartDate?: InputMaybe<Scalars['Date']['input']>;
+  candidate: Scalars['ObjectID']['input'];
+  candidateRate: RateInput;
+  client: Scalars['ObjectID']['input'];
+  company?: InputMaybe<Scalars['ObjectID']['input']>;
+  empId?: InputMaybe<Scalars['String']['input']>;
+  joiningDate?: InputMaybe<Scalars['Date']['input']>;
+  officialEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
+  paymentTerms?: InputMaybe<Scalars['Int']['input']>;
+  projectLocation?: InputMaybe<Scalars['String']['input']>;
+  projectName?: InputMaybe<Scalars['String']['input']>;
+  timesheetApprover?: InputMaybe<PersonInput>;
+  vendor: Scalars['ObjectID']['input'];
+  vendorAcctSpoc?: InputMaybe<PersonInput>;
+  vendorRate: RateInput;
+  vendorSpoc?: InputMaybe<PersonInput>;
+};
+
+export type JoiningUpdateInput = {
+  actualStartDate?: InputMaybe<Scalars['Date']['input']>;
+  candidate: Scalars['ObjectID']['input'];
+  candidateRate: RateInput;
+  company?: InputMaybe<Scalars['ObjectID']['input']>;
+  empId?: InputMaybe<Scalars['String']['input']>;
+  joiningDate?: InputMaybe<Scalars['Date']['input']>;
+  officialEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
+  paymentTerms?: InputMaybe<Scalars['Int']['input']>;
+  projectLocation?: InputMaybe<Scalars['String']['input']>;
+  projectName?: InputMaybe<Scalars['String']['input']>;
+  timesheetApprover?: InputMaybe<PersonInput>;
+  vendorAcctSpoc?: InputMaybe<PersonInput>;
+  vendorRate: RateInput;
+  vendorSpoc?: InputMaybe<PersonInput>;
+};
+
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   role?: Maybe<Scalars['String']['output']>;
@@ -311,24 +356,42 @@ export type LoginResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   addCandidate?: Maybe<Scalars['ObjectID']['output']>;
+  addClient?: Maybe<Scalars['ObjectID']['output']>;
   addCompany?: Maybe<Scalars['ObjectID']['output']>;
+  addJoining?: Maybe<Scalars['ObjectID']['output']>;
   addOpening?: Maybe<Scalars['ObjectID']['output']>;
   addUser?: Maybe<Scalars['String']['output']>;
   addVendor?: Maybe<Scalars['ObjectID']['output']>;
   deleteUser?: Maybe<Scalars['String']['output']>;
+  updateCandidate?: Maybe<Scalars['String']['output']>;
+  updateClient?: Maybe<Scalars['String']['output']>;
+  updateCompany?: Maybe<Scalars['String']['output']>;
+  updateJoining?: Maybe<Scalars['String']['output']>;
+  updateOpening?: Maybe<Scalars['String']['output']>;
   updateTimeSheet?: Maybe<Scalars['String']['output']>;
   updateUser?: Maybe<Scalars['String']['output']>;
+  updateVendor?: Maybe<Scalars['String']['output']>;
 };
 
 
 export type MutationAddCandidateArgs = {
   data?: InputMaybe<CandidateInput>;
-  openingId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationAddClientArgs = {
+  data?: InputMaybe<ClientInput>;
 };
 
 
 export type MutationAddCompanyArgs = {
   data?: InputMaybe<CompanyInput>;
+};
+
+
+export type MutationAddJoiningArgs = {
+  data?: InputMaybe<JoiningInput>;
+  openingId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -353,6 +416,36 @@ export type MutationDeleteUserArgs = {
 };
 
 
+export type MutationUpdateCandidateArgs = {
+  data?: InputMaybe<CandidateInput>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateClientArgs = {
+  data?: InputMaybe<ClientInput>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateCompanyArgs = {
+  data?: InputMaybe<CompanyInput>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateJoiningArgs = {
+  data?: InputMaybe<JoiningUpdateInput>;
+  joiningId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateOpeningArgs = {
+  data: OpeningInput;
+  openingId: Scalars['String']['input'];
+};
+
+
 export type MutationUpdateTimeSheetArgs = {
   data?: InputMaybe<TimeSheetInput>;
 };
@@ -364,11 +457,17 @@ export type MutationUpdateUserArgs = {
   username: Scalars['String']['input'];
 };
 
+
+export type MutationUpdateVendorArgs = {
+  data?: InputMaybe<VendorInput>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Opening = {
   __typename?: 'Opening';
-  candidates?: Maybe<Array<Maybe<Candidate>>>;
   endClient?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['ID']['output']>;
+  joinings?: Maybe<Array<Maybe<Joining>>>;
   name?: Maybe<Scalars['String']['output']>;
   suggestedRate?: Maybe<Rate>;
 };
@@ -382,6 +481,12 @@ export type OpeningInput = {
 export type PaginatedCandidate = {
   __typename?: 'PaginatedCandidate';
   results?: Maybe<Array<Candidate>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
+export type PaginatedClient = {
+  __typename?: 'PaginatedClient';
+  results?: Maybe<Array<Client>>;
   total?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -427,12 +532,17 @@ export type Query = {
   _service: _Service;
   candidate?: Maybe<Candidate>;
   candidates: PaginatedCandidate;
+  client?: Maybe<Client>;
+  clients: PaginatedClient;
   companies: PaginatedCompany;
   company?: Maybe<Company>;
   getTimeSheet?: Maybe<TimeSheet>;
+  joining?: Maybe<Joining>;
   login?: Maybe<LoginResponse>;
   opening: Opening;
-  searchCompany?: Maybe<Array<Maybe<Company>>>;
+  searchCandidate?: Maybe<Array<Maybe<Candidate>>>;
+  searchClient?: Maybe<Array<Maybe<Client>>>;
+  searchCompany?: Maybe<Array<Maybe<Client>>>;
   users: PaginatedUsers;
   vendor?: Maybe<Vendor>;
   vendors: PaginatedVendor;
@@ -445,6 +555,17 @@ export type QueryCandidateArgs = {
 
 
 export type QueryCandidatesArgs = {
+  pageNum?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryClientArgs = {
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+};
+
+
+export type QueryClientsArgs = {
   pageNum?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -467,6 +588,11 @@ export type QueryGetTimeSheetArgs = {
 };
 
 
+export type QueryJoiningArgs = {
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+};
+
+
 export type QueryLoginArgs = {
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
@@ -475,6 +601,16 @@ export type QueryLoginArgs = {
 
 export type QueryOpeningArgs = {
   id?: InputMaybe<Scalars['ObjectID']['input']>;
+};
+
+
+export type QuerySearchCandidateArgs = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QuerySearchClientArgs = {
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -569,7 +705,7 @@ export type Vendor = {
   authSignEmail?: Maybe<Scalars['EmailAddress']['output']>;
   authSignName?: Maybe<Scalars['String']['output']>;
   bank?: Maybe<Bank>;
-  company: Company;
+  client: Client;
   einNumber?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['ID']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -586,7 +722,7 @@ export type VendorInput = {
   authSignEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
   authSignName?: InputMaybe<Scalars['String']['input']>;
   bank?: InputMaybe<BankInput>;
-  company?: InputMaybe<Scalars['ObjectID']['input']>;
+  client?: InputMaybe<Scalars['ObjectID']['input']>;
   einNumber?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   paymentTerms?: InputMaybe<Scalars['Int']['input']>;
@@ -598,12 +734,41 @@ export type _Service = {
   sdl?: Maybe<Scalars['String']['output']>;
 };
 
+export type SearchCandidateQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type SearchCandidateQuery = { __typename?: 'Query', searchCandidate?: Array<{ __typename?: 'Candidate', id?: any | null, name?: string | null } | null> | null };
+
+export type SearchCompanyQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type SearchCompanyQuery = { __typename?: 'Query', searchCompany?: Array<{ __typename?: 'Client', id?: any | null, companyName?: string | null } | null> | null };
+
+export type UpdateCandidateMutationVariables = Exact<{
+  data: CandidateInput;
+  id: Scalars['String']['input'];
+}>;
+
+
+export type UpdateCandidateMutation = { __typename?: 'Mutation', updateCandidate?: string | null };
+
+export type GetCandidateQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+}>;
+
+
+export type GetCandidateQuery = { __typename?: 'Query', candidate?: { __typename?: 'Candidate', name?: string | null, personalEmail?: any | null, contact?: any | null, timezone?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } | null };
+
 export type QueryCandidateByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ObjectID']['input']>;
 }>;
 
 
-export type QueryCandidateByIdQuery = { __typename?: 'Query', candidate?: { __typename?: 'Candidate', name?: string | null, personalEmail?: any | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null, contact?: any | null, officialEmail?: any | null, manager?: string | null, empId?: string | null, joiningDate?: any | null, actualStartDate?: any | null, paymentTerms?: number | null, companyName?: string | null, projectName?: string | null, projectLocation?: string | null, vendorRate: { __typename?: 'Rate', rate?: number | null, otRate?: number | null }, candidateRate: { __typename?: 'Rate', rate?: number | null, otRate?: number | null }, vendorSpoc: { __typename?: 'Person', name?: string | null, email?: any | null, phone?: any | null }, vendorAcctSpoc: { __typename?: 'Person', name?: string | null, email?: any | null, phone?: any | null }, bank: { __typename?: 'Bank', accountNumber?: string | null, accountName?: string | null, routingNumber?: string | null, bankName?: string | null }, company?: { __typename?: 'Company', id?: any | null, companyName?: string | null } | null, vendor?: { __typename?: 'Vendor', id?: string | null, name?: string | null } | null, timesheetApprover?: { __typename?: 'Person', name?: string | null, email?: any | null } | null } | null };
+export type QueryCandidateByIdQuery = { __typename?: 'Query', candidate?: { __typename?: 'Candidate', name?: string | null, personalEmail?: any | null, contact?: any | null, timezone?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } | null };
 
 export type QueryCandidateQueryVariables = Exact<{
   pageNum?: InputMaybe<Scalars['Int']['input']>;
@@ -611,7 +776,44 @@ export type QueryCandidateQueryVariables = Exact<{
 }>;
 
 
-export type QueryCandidateQuery = { __typename?: 'Query', candidates: { __typename?: 'PaginatedCandidate', total?: number | null, results?: Array<{ __typename?: 'Candidate', id?: any | null, name?: string | null, joiningDate?: any | null, paymentTerms?: number | null, actualStartDate?: any | null, contact?: any | null, manager?: string | null, company?: { __typename?: 'Company', companyName?: string | null } | null, vendor?: { __typename?: 'Vendor', name?: string | null } | null }> | null } };
+export type QueryCandidateQuery = { __typename?: 'Query', candidates: { __typename?: 'PaginatedCandidate', total?: number | null, results?: Array<{ __typename?: 'Candidate', id?: any | null, name?: string | null, personalEmail?: any | null, contact?: any | null, timezone?: string | null }> | null } };
+
+export type CreateClientMutationVariables = Exact<{
+  data: ClientInput;
+}>;
+
+
+export type CreateClientMutation = { __typename?: 'Mutation', addClient?: any | null };
+
+export type UpdateClientMutationVariables = Exact<{
+  data: ClientInput;
+  id?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateClientMutation = { __typename?: 'Mutation', updateClient?: string | null };
+
+export type GetClientByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+}>;
+
+
+export type GetClientByIdQuery = { __typename?: 'Query', client?: { __typename?: 'Client', companyName?: string | null, logo?: string | null, signingAuthName?: string | null, signingAuthEmail?: any | null, signingAuthDesignation?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } | null };
+
+export type QueryClientByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+}>;
+
+
+export type QueryClientByIdQuery = { __typename?: 'Query', client?: { __typename?: 'Client', companyName?: string | null, logo?: string | null, signingAuthName?: string | null, signingAuthEmail?: any | null, signingAuthDesignation?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } | null };
+
+export type QueryClientQueryVariables = Exact<{
+  pageNum?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type QueryClientQuery = { __typename?: 'Query', clients: { __typename?: 'PaginatedClient', total?: number | null, results?: Array<{ __typename?: 'Client', id?: any | null, companyName?: string | null, signingAuthName?: string | null, signingAuthEmail?: any | null, signingAuthDesignation?: string | null, addressLine1?: string | null }> | null } };
 
 export type CreateCompanyMutationVariables = Exact<{
   data: CompanyInput;
@@ -620,12 +822,27 @@ export type CreateCompanyMutationVariables = Exact<{
 
 export type CreateCompanyMutation = { __typename?: 'Mutation', addCompany?: any | null };
 
+export type UpdateCompanyMutationVariables = Exact<{
+  data: CompanyInput;
+  id?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateCompanyMutation = { __typename?: 'Mutation', updateCompany?: string | null };
+
+export type GetCompanyQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+}>;
+
+
+export type GetCompanyQuery = { __typename?: 'Query', company?: { __typename?: 'Company', companyName?: string | null, ownerName?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null, bank: { __typename?: 'Bank', bankName?: string | null, accountName?: string | null, routingNumber?: string | null, accountNumber?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } } | null };
+
 export type QueryCompanyByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ObjectID']['input']>;
 }>;
 
 
-export type QueryCompanyByIdQuery = { __typename?: 'Query', company?: { __typename?: 'Company', companyName?: string | null, logo?: string | null, signingAuthName?: string | null, signingAuthEmail?: any | null, signingAuthDesignation?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } | null };
+export type QueryCompanyByIdQuery = { __typename?: 'Query', company?: { __typename?: 'Company', companyName?: string | null, ownerName?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null, bank: { __typename?: 'Bank', bankName?: string | null, accountName?: string | null, accountNumber?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null, routingNumber?: string | null } } | null };
 
 export type QueryCompanyQueryVariables = Exact<{
   pageNum?: InputMaybe<Scalars['Int']['input']>;
@@ -633,7 +850,7 @@ export type QueryCompanyQueryVariables = Exact<{
 }>;
 
 
-export type QueryCompanyQuery = { __typename?: 'Query', companies: { __typename?: 'PaginatedCompany', total?: number | null, results?: Array<{ __typename?: 'Company', id?: any | null, companyName?: string | null, signingAuthName?: string | null, signingAuthEmail?: any | null, signingAuthDesignation?: string | null, addressLine1?: string | null }> | null } };
+export type QueryCompanyQuery = { __typename?: 'Query', companies: { __typename?: 'PaginatedCompany', total?: number | null, results?: Array<{ __typename?: 'Company', id?: any | null, companyName?: string | null, ownerName?: string | null, addressLine1?: string | null, bank: { __typename?: 'Bank', bankName?: string | null } }> | null } };
 
 export type LoginQueryQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -655,7 +872,7 @@ export type QueryBasicCandidateByIdQueryVariables = Exact<{
 }>;
 
 
-export type QueryBasicCandidateByIdQuery = { __typename?: 'Query', candidate?: { __typename?: 'Candidate', name?: string | null, empId?: string | null, actualStartDate?: any | null, projectName?: string | null, projectLocation?: string | null, company?: { __typename?: 'Company', id?: any | null, companyName?: string | null } | null, vendor?: { __typename?: 'Vendor', id?: string | null, name?: string | null } | null, timesheetApprover?: { __typename?: 'Person', name?: string | null, email?: any | null } | null, candidateRate: { __typename?: 'Rate', otRate?: number | null, rate?: number | null } } | null };
+export type QueryBasicCandidateByIdQuery = { __typename?: 'Query', candidate?: { __typename?: 'Candidate', name?: string | null } | null };
 
 export type QueryTimeSheetQueryVariables = Exact<{
   month?: InputMaybe<Scalars['Int']['input']>;
@@ -703,20 +920,27 @@ export type CreateVendorMutationVariables = Exact<{
 
 export type CreateVendorMutation = { __typename?: 'Mutation', addVendor?: any | null };
 
-export type SearchCompanyQueryVariables = Exact<{
+export type SearchClientQueryVariables = Exact<{
   data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type SearchCompanyQuery = { __typename?: 'Query', searchCompany?: Array<{ __typename?: 'Company', id?: any | null, companyName?: string | null } | null> | null };
+export type SearchClientQuery = { __typename?: 'Query', searchClient?: Array<{ __typename?: 'Client', id?: any | null, companyName?: string | null } | null> | null };
 
-export type AddCandidateMutationVariables = Exact<{
-  data: CandidateInput;
-  openingId?: InputMaybe<Scalars['String']['input']>;
+export type UpdateVendorMutationVariables = Exact<{
+  data: VendorInput;
+  id?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type AddCandidateMutation = { __typename?: 'Mutation', addCandidate?: any | null };
+export type UpdateVendorMutation = { __typename?: 'Mutation', updateVendor?: string | null };
+
+export type GetVendorByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+}>;
+
+
+export type GetVendorByIdQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', name?: string | null, vendorId?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null, einNumber?: string | null, authSignName?: string | null, authSignEmail?: any | null, authSignDesig?: string | null, paymentTerms?: number | null, bank?: { __typename?: 'Bank', bankName?: string | null, accountName?: string | null, accountNumber?: string | null, routingNumber?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } | null, client: { __typename?: 'Client', id?: any | null, companyName?: string | null } } | null };
 
 export type AddOpeningMutationVariables = Exact<{
   data: OpeningInput;
@@ -726,12 +950,27 @@ export type AddOpeningMutationVariables = Exact<{
 
 export type AddOpeningMutation = { __typename?: 'Mutation', addOpening?: any | null };
 
+export type UpdateOpeningMutationVariables = Exact<{
+  data: OpeningInput;
+  openingId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateOpeningMutation = { __typename?: 'Mutation', updateOpening?: string | null };
+
+export type GetOpeningByIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ObjectID']['input']>;
+}>;
+
+
+export type GetOpeningByIdQuery = { __typename?: 'Query', opening: { __typename?: 'Opening', name?: string | null, endClient?: string | null, suggestedRate?: { __typename?: 'Rate', rate?: number | null, otRate?: number | null } | null } };
+
 export type QueryVendorByIdQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ObjectID']['input']>;
 }>;
 
 
-export type QueryVendorByIdQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', name?: string | null, vendorId?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null, einNumber?: string | null, authSignName?: string | null, authSignEmail?: any | null, authSignDesig?: string | null, paymentTerms?: number | null, bank?: { __typename?: 'Bank', bankName?: string | null, accountName?: string | null, accountNumber?: string | null } | null, company: { __typename?: 'Company', id?: any | null, companyName?: string | null }, openings?: Array<{ __typename?: 'Opening', id?: string | null, name?: string | null, endClient?: string | null, suggestedRate?: { __typename?: 'Rate', otRate?: number | null, rate?: number | null } | null, candidates?: Array<{ __typename?: 'Candidate', id?: any | null, name?: string | null, joiningDate?: any | null, paymentTerms?: number | null, actualStartDate?: any | null, contact?: any | null, manager?: string | null } | null> | null }> | null } | null };
+export type QueryVendorByIdQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', name?: string | null, vendorId?: string | null, einNumber?: string | null, paymentTerms?: number | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null, authSignName?: string | null, authSignEmail?: any | null, authSignDesig?: string | null, client: { __typename?: 'Client', id?: any | null, companyName?: string | null }, bank?: { __typename?: 'Bank', bankName?: string | null, accountName?: string | null, accountNumber?: string | null, routingNumber?: string | null, addressLine1?: string | null, addressLine2?: string | null, addressLine3?: string | null } | null, openings?: Array<{ __typename?: 'Opening', id?: string | null, name?: string | null, endClient?: string | null, suggestedRate?: { __typename?: 'Rate', otRate?: number | null, rate?: number | null } | null, joinings?: Array<{ __typename?: 'Joining', id?: any | null, paymentTerms?: number | null, actualStartDate?: any | null, joiningDate?: any | null, candidate: { __typename?: 'Candidate', id?: any | null, name?: string | null }, candidateRate: { __typename?: 'Rate', rate?: number | null } } | null> | null }> | null } | null };
 
 export type QueryVendorQueryVariables = Exact<{
   pageNum?: InputMaybe<Scalars['Int']['input']>;
@@ -739,25 +978,39 @@ export type QueryVendorQueryVariables = Exact<{
 }>;
 
 
-export type QueryVendorQuery = { __typename?: 'Query', vendors: { __typename?: 'PaginatedVendor', total?: number | null, results?: Array<{ __typename?: 'Vendor', id?: string | null, name?: string | null, authSignName?: string | null, paymentTerms?: number | null, company: { __typename?: 'Company', companyName?: string | null } }> | null } };
+export type QueryVendorQuery = { __typename?: 'Query', vendors: { __typename?: 'PaginatedVendor', total?: number | null, results?: Array<{ __typename?: 'Vendor', id?: string | null, name?: string | null, authSignName?: string | null, paymentTerms?: number | null, client: { __typename?: 'Client', companyName?: string | null } }> | null } };
 
 
-export const QueryCandidateByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCandidateById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"personalEmail"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"officialEmail"}},{"kind":"Field","name":{"kind":"Name","value":"manager"}},{"kind":"Field","name":{"kind":"Name","value":"empId"}},{"kind":"Field","name":{"kind":"Name","value":"joiningDate"}},{"kind":"Field","name":{"kind":"Name","value":"actualStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"vendorRate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rate"}},{"kind":"Field","name":{"kind":"Name","value":"otRate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"candidateRate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rate"}},{"kind":"Field","name":{"kind":"Name","value":"otRate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"vendorSpoc"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vendorAcctSpoc"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accountNumber"}},{"kind":"Field","name":{"kind":"Name","value":"accountName"}},{"kind":"Field","name":{"kind":"Name","value":"routingNumber"}},{"kind":"Field","name":{"kind":"Name","value":"bankName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vendor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"projectLocation"}},{"kind":"Field","name":{"kind":"Name","value":"timesheetApprover"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]} as unknown as DocumentNode<QueryCandidateByIdQuery, QueryCandidateByIdQueryVariables>;
-export const QueryCandidateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCandidate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidates"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"joiningDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"actualStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"manager"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vendor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryCandidateQuery, QueryCandidateQueryVariables>;
+export const SearchCandidateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchCandidate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchCandidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<SearchCandidateQuery, SearchCandidateQueryVariables>;
+export const SearchCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchCompany"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}}]}}]} as unknown as DocumentNode<SearchCompanyQuery, SearchCompanyQueryVariables>;
+export const UpdateCandidateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCandidate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CandidateInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCandidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<UpdateCandidateMutation, UpdateCandidateMutationVariables>;
+export const GetCandidateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCandidate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"personalEmail"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}}]}}]} as unknown as DocumentNode<GetCandidateQuery, GetCandidateQueryVariables>;
+export const QueryCandidateByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCandidateById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"personalEmail"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}}]}}]} as unknown as DocumentNode<QueryCandidateByIdQuery, QueryCandidateByIdQueryVariables>;
+export const QueryCandidateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCandidate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidates"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"personalEmail"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryCandidateQuery, QueryCandidateQueryVariables>;
+export const CreateClientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateClient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ClientInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addClient"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<CreateClientMutation, CreateClientMutationVariables>;
+export const UpdateClientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateClient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ClientInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClient"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<UpdateClientMutation, UpdateClientMutationVariables>;
+export const GetClientByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetClientById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"client"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"logo"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthName"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthEmail"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthDesignation"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}}]}}]} as unknown as DocumentNode<GetClientByIdQuery, GetClientByIdQueryVariables>;
+export const QueryClientByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryClientById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"client"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"logo"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthName"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthEmail"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthDesignation"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}}]}}]} as unknown as DocumentNode<QueryClientByIdQuery, QueryClientByIdQueryVariables>;
+export const QueryClientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryClient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthName"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthEmail"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthDesignation"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryClientQuery, QueryClientQueryVariables>;
 export const CreateCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CompanyInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCompany"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<CreateCompanyMutation, CreateCompanyMutationVariables>;
-export const QueryCompanyByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCompanyById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"company"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"logo"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthName"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthEmail"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthDesignation"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}}]}}]} as unknown as DocumentNode<QueryCompanyByIdQuery, QueryCompanyByIdQueryVariables>;
-export const QueryCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthName"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthEmail"}},{"kind":"Field","name":{"kind":"Name","value":"signingAuthDesignation"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryCompanyQuery, QueryCompanyQueryVariables>;
+export const UpdateCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CompanyInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCompany"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<UpdateCompanyMutation, UpdateCompanyMutationVariables>;
+export const GetCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"company"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"ownerName"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bankName"}},{"kind":"Field","name":{"kind":"Name","value":"accountName"}},{"kind":"Field","name":{"kind":"Name","value":"routingNumber"}},{"kind":"Field","name":{"kind":"Name","value":"accountNumber"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}}]}}]}}]} as unknown as DocumentNode<GetCompanyQuery, GetCompanyQueryVariables>;
+export const QueryCompanyByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCompanyById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"company"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"ownerName"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bankName"}},{"kind":"Field","name":{"kind":"Name","value":"accountName"}},{"kind":"Field","name":{"kind":"Name","value":"accountNumber"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}},{"kind":"Field","name":{"kind":"Name","value":"routingNumber"}}]}}]}}]}}]} as unknown as DocumentNode<QueryCompanyByIdQuery, QueryCompanyByIdQueryVariables>;
+export const QueryCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"ownerName"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bankName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryCompanyQuery, QueryCompanyQueryVariables>;
 export const LoginQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoginQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<LoginQueryQuery, LoginQueryQueryVariables>;
 export const UpdateTimeSheetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTimeSheet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"TimeSheetInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTimeSheet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<UpdateTimeSheetMutation, UpdateTimeSheetMutationVariables>;
-export const QueryBasicCandidateByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryBasicCandidateById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"empId"}},{"kind":"Field","name":{"kind":"Name","value":"actualStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"vendor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"projectLocation"}},{"kind":"Field","name":{"kind":"Name","value":"timesheetApprover"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"candidateRate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"otRate"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}}]}}]}}]} as unknown as DocumentNode<QueryBasicCandidateByIdQuery, QueryBasicCandidateByIdQueryVariables>;
+export const QueryBasicCandidateByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryBasicCandidateById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<QueryBasicCandidateByIdQuery, QueryBasicCandidateByIdQueryVariables>;
 export const QueryTimeSheetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryTimeSheet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"month"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"candidate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTimeSheet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"month"},"value":{"kind":"Variable","name":{"kind":"Name","value":"month"}}},{"kind":"Argument","name":{"kind":"Name","value":"candidate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"candidate"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timeSheet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"standardHours"}},{"kind":"Field","name":{"kind":"Name","value":"OTHours"}}]}},{"kind":"Field","name":{"kind":"Name","value":"submissionDate"}},{"kind":"Field","name":{"kind":"Name","value":"approvalDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<QueryTimeSheetQuery, QueryTimeSheetQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"role"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"role"},"value":{"kind":"Variable","name":{"kind":"Name","value":"role"}}}]}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
 export const QueryUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryUserQuery, QueryUserQueryVariables>;
 export const DeleteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}]}]}}]} as unknown as DocumentNode<DeleteUserMutation, DeleteUserMutationVariables>;
 export const CreateVendorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateVendor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"VendorInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addVendor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<CreateVendorMutation, CreateVendorMutationVariables>;
-export const SearchCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchCompany"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}}]}}]} as unknown as DocumentNode<SearchCompanyQuery, SearchCompanyQueryVariables>;
-export const AddCandidateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddCandidate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CandidateInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"openingId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCandidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"openingId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"openingId"}}}]}]}}]} as unknown as DocumentNode<AddCandidateMutation, AddCandidateMutationVariables>;
+export const SearchClientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchClient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchClient"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}}]}}]} as unknown as DocumentNode<SearchClientQuery, SearchClientQueryVariables>;
+export const UpdateVendorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateVendor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"VendorInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateVendor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<UpdateVendorMutation, UpdateVendorMutationVariables>;
+export const GetVendorByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVendorById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vendor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"vendorId"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}},{"kind":"Field","name":{"kind":"Name","value":"einNumber"}},{"kind":"Field","name":{"kind":"Name","value":"authSignName"}},{"kind":"Field","name":{"kind":"Name","value":"authSignEmail"}},{"kind":"Field","name":{"kind":"Name","value":"authSignDesig"}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bankName"}},{"kind":"Field","name":{"kind":"Name","value":"accountName"}},{"kind":"Field","name":{"kind":"Name","value":"accountNumber"}},{"kind":"Field","name":{"kind":"Name","value":"routingNumber"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}},{"kind":"Field","name":{"kind":"Name","value":"client"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}}]}}]}}]} as unknown as DocumentNode<GetVendorByIdQuery, GetVendorByIdQueryVariables>;
 export const AddOpeningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddOpening"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OpeningInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vendorId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addOpening"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"vendorId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vendorId"}}}]}]}}]} as unknown as DocumentNode<AddOpeningMutation, AddOpeningMutationVariables>;
-export const QueryVendorByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryVendorById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vendor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"vendorId"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}},{"kind":"Field","name":{"kind":"Name","value":"einNumber"}},{"kind":"Field","name":{"kind":"Name","value":"authSignName"}},{"kind":"Field","name":{"kind":"Name","value":"authSignEmail"}},{"kind":"Field","name":{"kind":"Name","value":"authSignDesig"}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bankName"}},{"kind":"Field","name":{"kind":"Name","value":"accountName"}},{"kind":"Field","name":{"kind":"Name","value":"accountNumber"}}]}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"openings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"endClient"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedRate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"otRate"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"candidates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"joiningDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"actualStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"contact"}},{"kind":"Field","name":{"kind":"Name","value":"manager"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QueryVendorByIdQuery, QueryVendorByIdQueryVariables>;
-export const QueryVendorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryVendor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vendors"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"authSignName"}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryVendorQuery, QueryVendorQueryVariables>;
+export const UpdateOpeningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateOpening"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OpeningInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"openingId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateOpening"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"openingId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"openingId"}}}]}]}}]} as unknown as DocumentNode<UpdateOpeningMutation, UpdateOpeningMutationVariables>;
+export const GetOpeningByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOpeningById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"opening"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"endClient"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedRate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rate"}},{"kind":"Field","name":{"kind":"Name","value":"otRate"}}]}}]}}]}}]} as unknown as DocumentNode<GetOpeningByIdQuery, GetOpeningByIdQueryVariables>;
+export const QueryVendorByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryVendorById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vendor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"vendorId"}},{"kind":"Field","name":{"kind":"Name","value":"client"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"einNumber"}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}},{"kind":"Field","name":{"kind":"Name","value":"authSignName"}},{"kind":"Field","name":{"kind":"Name","value":"authSignEmail"}},{"kind":"Field","name":{"kind":"Name","value":"authSignDesig"}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bankName"}},{"kind":"Field","name":{"kind":"Name","value":"accountName"}},{"kind":"Field","name":{"kind":"Name","value":"accountNumber"}},{"kind":"Field","name":{"kind":"Name","value":"routingNumber"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine2"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine3"}}]}},{"kind":"Field","name":{"kind":"Name","value":"openings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"endClient"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedRate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"otRate"}},{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"joinings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"candidate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"candidateRate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"actualStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"joiningDate"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QueryVendorByIdQuery, QueryVendorByIdQueryVariables>;
+export const QueryVendorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryVendor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vendors"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"authSignName"}},{"kind":"Field","name":{"kind":"Name","value":"paymentTerms"}},{"kind":"Field","name":{"kind":"Name","value":"client"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companyName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryVendorQuery, QueryVendorQueryVariables>;
