@@ -11,6 +11,9 @@ const CandidateForm = (props: { loading: boolean, onSubmit: any, formRef: any, r
             <Form.Item label="Personal Email" name={'personalEmail'} rules={[{type: 'email'}]}>
                 <Input placeholder="Personal Email" type={'email'}/>
             </Form.Item>
+            <Form.Item label="Profile" name={'profile'}>
+                <Input placeholder="Profile"/>
+            </Form.Item>
             <Form.Item label="Contact" name={'contact'}>
                 <Input placeholder="Contact"/>
             </Form.Item>

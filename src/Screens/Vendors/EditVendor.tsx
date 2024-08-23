@@ -34,7 +34,7 @@ const EditVendor = (props: { refetch: any, vendorId: string }) => {
         }
     }, [vendorData])
 
-    const [companyName, setCompanyName] = useDebounceValue('', 2000)
+    const [companyName, setCompanyName] = useDebounceValue('', 1000)
 
     const onClose = () => {
         setOpen(false);

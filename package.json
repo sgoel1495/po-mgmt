@@ -16,6 +16,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "antd": "^5.18.0",
+    "apollo-upload-client": "^18.0.1",
     "dayjs": "^1.11.11",
     "graphql": "^16.8.2",
     "lodash": "^4.17.21",
@@ -59,6 +60,7 @@
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.3.0",
     "@graphql-codegen/introspection": "4.0.3",
+    "@types/apollo-upload-client": "^18.0.0",
     "craco-alias": "^3.0.1",
     "ts-loader": "^9.5.1",
     "typescript": "^4.9.5"

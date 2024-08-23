@@ -1,52 +1,49 @@
 import React from 'react';
 import {Button, Drawer, notification} from "antd";
-import {useLazyQuery, useMutation} from "@apollo/client";
-import {ClientInput} from "../../gql/graphql";
 import {EditOutlined} from "@ant-design/icons";
 import ClientForm from "@common/Forms/ClientForm";
-import {GET_CLIENT, UPDATE_CLIENT} from "@common/gql/client";
+import {useMutation} from "@apollo/client";
 import {mediaUrl} from "@config/urls";
+import {DocumentInput} from "../../gql/graphql";
+import {UPDATE_DOCUMENT} from "@common/gql/document";
+import DocumentForm from "@common/Forms/DocumentForm";
 
-const EditClient = (props: { refetch: any, clientId: string }) => {
+const EditDocument = (props: { data: any, refetch: any }) => {
+
     const [api, contextHolder] = notification.useNotification();
     const [open, setOpen] = React.useState(false);
     const formRef = React.useRef<any>(null);
-    const [updateClient, {loading, error}] = useMutation(UPDATE_CLIENT);
-    const [getClient, {data}] = useLazyQuery(GET_CLIENT)
+    const [updateClient, {loading, error}] = useMutation(UPDATE_DOCUMENT);
     const showDrawer = () => {
         setOpen(true);
-        getClient({
-            variables: {
-                id: props.clientId
-            }
-        })
     };
-
     React.useEffect(() => {
-        if (data?.client) {
+        if (props.data && open) {
             formRef.current?.setFieldsValue({
-                ...data.client, logo: [{
+                name: props.data.name,
+                description: props.data.description,
+                file: [{
                     uid: '1',
-                    name: data.client.logo,
+                    name: props.data.link,
                     status: 'done',
-                    url: mediaUrl + "/" + data.client.logo,
+                    url: mediaUrl + "/" + props.data.link,
                 }]
             });
         }
-    }, [data])
+    }, [props.data,open])
 
     const onClose = () => {
         setOpen(false);
     };
 
-    const onSubmit = (data: ClientInput) => {
+    const onSubmit = (data: DocumentInput) => {
         updateClient({
             variables: {
-                data: {...data, logo: data.logo && data.logo[0] ? data.logo[0].originFileObj : undefined},
-                id: props.clientId
+                data: {...data, file: data.file && data.file[0] ? data.file[0].originFileObj : undefined},
+                id: props.data.id
             }
         }).then((resp) => {
-            if (resp.data.updateClient) {
+            if (resp.data.updateDocument) {
                 setOpen(false)
                 formRef.current?.resetFields();
                 props.refetch();
@@ -73,15 +70,16 @@ const EditClient = (props: { refetch: any, clientId: string }) => {
 
     const reset = () => {
         formRef.current?.setFieldsValue({
-            ...data.client, logo: [{
+            name: props.data.name,
+            description: props.data.description,
+            file: [{
                 uid: '1',
-                name: data.client.logo,
+                name: props.data.link,
                 status: 'done',
-                url: mediaUrl + "/" + data.client.logo,
+                url: mediaUrl + "/" + props.data.link,
             }]
         });
     }
-
     return (
         <>
             {contextHolder}
@@ -89,15 +87,15 @@ const EditClient = (props: { refetch: any, clientId: string }) => {
                 <EditOutlined/>
             </Button>
             <Drawer
-                title="Edit Client"
+                title="Edit Document"
                 onClose={onClose}
                 open={open}
                 size={'large'}
             >
-                <ClientForm loading={loading} formRef={formRef} onSubmit={onSubmit} reset={reset}/>
+                <DocumentForm loading={loading} formRef={formRef} onSubmit={onSubmit} reset={reset}/>
             </Drawer>
         </>
     );
 };
 
-export default EditClient;
+export default EditDocument;

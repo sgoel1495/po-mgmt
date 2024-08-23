@@ -19,6 +19,7 @@ export const GET_CANDIDATE = gql`
             personalEmail
             contact
             timezone
+            profile
             addressLine1
             addressLine2
             addressLine3
@@ -35,6 +36,7 @@ export const GET_CANDIDATES = gql`
                 personalEmail
                 contact
                 timezone
+                profile
             }
             total
         }

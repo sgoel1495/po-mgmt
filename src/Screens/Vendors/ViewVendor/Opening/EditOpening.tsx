@@ -1,27 +1,11 @@
 import React from 'react';
 import {Button, Drawer, notification} from "antd";
-import {gql, useLazyQuery, useMutation} from "@apollo/client";
+import {useLazyQuery, useMutation} from "@apollo/client";
 import {OpeningInput} from "../../../../gql/graphql";
 import OpeningForm from "@common/Forms/OpeningForm";
+import {GET_OPENING, UPDATE_OPENING} from "@common/gql/opening";
 
-const UPDATE_OPENING = gql`
-    mutation UpdateOpening($data: OpeningInput!, $openingId: String!) {
-        updateOpening(data: $data, openingId: $openingId)
-    }
-`
 
-const GET_OPENING = gql`
-    query GetOpeningById($id: ObjectID) {
-        opening(id: $id) {
-            name
-            endClient
-            suggestedRate {
-                rate
-                otRate
-            }
-        }
-    }
-`
 
 const EditOpening = (props: { openingId: string, refetch: any }) => {
     const [api, contextHolder] = notification.useNotification();

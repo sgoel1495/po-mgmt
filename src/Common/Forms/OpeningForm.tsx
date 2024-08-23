@@ -11,6 +11,9 @@ const OpeningForm = (props: { onSubmit: any, formRef: any, loading: boolean, res
             <Form.Item label="End Client" required rules={[{required: true}]} name={'endClient'}>
                 <Input placeholder="End Client"/>
             </Form.Item>
+            <Form.Item label="Project Location" required rules={[{required: true}]} name={'location'}>
+                <Input placeholder="Project Location"/>
+            </Form.Item>
             <Card title="Suggested Rate" className={'mb-5 w-full'}>
                 <Form.Item label={'Rate'} name={['suggestedRate', 'rate']} required rules={[{required: true}]}>
                     <InputNumber placeholder={'Rate'} className={'w-full'} addonAfter={"$ / Hr"}/>

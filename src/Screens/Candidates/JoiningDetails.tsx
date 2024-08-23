@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, Descriptions} from "antd";
+import Documents from "@common/Documents";
 
 const JoiningDetails = (props: { joining: any, opening:any }) => {
 
@@ -16,19 +17,14 @@ const JoiningDetails = (props: { joining: any, opening:any }) => {
                 children: props.opening.endClient
             },
             {
+                key: 'location',
+                label: 'Project Location',
+                children: props.opening.location
+            },
+            {
                 key: 'designation',
                 label: 'Designation',
                 children: props.opening.name
-            },
-            {
-                key: 'projectName',
-                label: 'Project Name',
-                children: props.joining.projectName
-            },
-            {
-                key: 'projectLocation',
-                label: 'Project Location',
-                children: props.joining.projectLocation
             },
             {
                 key: 'empId',
@@ -151,10 +147,11 @@ const JoiningDetails = (props: { joining: any, opening:any }) => {
                 <Card type={'inner'} title={'Vendor Spoc'}>
                     <Descriptions items={items.vendorSpoc} layout={'vertical'} column={3}/>
                 </Card>
-                <Card type={'inner'} title={'vendor Account Spoc'}>
+                <Card type={'inner'} title={'Vendor Account Spoc'}>
                     <Descriptions items={items.vendorAcctSpoc} layout={'vertical'} column={3}/>
                 </Card>
             </div>
+            <Documents ownerId={props.joining.id ? props.joining.id : ""}/>
         </div>
     );
 };

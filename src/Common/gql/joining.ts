@@ -34,12 +34,14 @@ export const GET_CANDIDATE_JOINING = gql`
                 personalEmail
                 contact
                 timezone
+                profile
                 addressLine1
                 addressLine2
                 addressLine3
             }
             joinings {
                 joining {
+                    id
                     empId
                     officialEmail
                     company {
@@ -54,8 +56,6 @@ export const GET_CANDIDATE_JOINING = gql`
                     joiningDate
                     actualStartDate
                     paymentTerms
-                    projectName
-                    projectLocation
                     vendor {
                         name
                     }
@@ -85,6 +85,7 @@ export const GET_CANDIDATE_JOINING = gql`
                 opening {
                     name
                     endClient
+                    location
                 }
             },
 
@@ -108,8 +109,6 @@ export const GET_JOINING = gql`
             actualStartDate
             paymentTerms
             officialEmail
-            projectName
-            projectLocation
             timesheetApprover {
                 name
                 email

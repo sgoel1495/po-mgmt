@@ -31,6 +31,11 @@ const ViewCandidate = () => {
                         children: data.candidate['personalEmail']
                     },
                     {
+                        key: 'profile',
+                        label: 'Profile',
+                        children: data.candidate['profile']
+                    },
+                    {
                         key: 'contact',
                         label: 'Phone Number',
                         children: data.candidate['contact']

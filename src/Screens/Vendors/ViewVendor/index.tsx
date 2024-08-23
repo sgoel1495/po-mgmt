@@ -5,6 +5,7 @@ import {Card, Descriptions, Tabs} from "antd";
 import AddOpening from "./Opening/AddOpening";
 import ViewOpening from "./Opening/ViewOpening";
 import {GET_VIEW_VENDOR} from "@common/gql/vendor";
+import Documents from "@common/Documents";
 
 
 const Index = () => {
@@ -122,7 +123,9 @@ const Index = () => {
                     <Descriptions items={items.bank} layout={'vertical'} column={3}/>
                 </Card>
             </div>
+            <Documents ownerId={params.id ? params.id : ""}/>
             <Card
+                className={"my-5"}
                 title={'openings'}
                 extra={<AddOpening vendorId={params.id} refetch={refetch}/>}
             >
@@ -144,6 +147,7 @@ const Index = () => {
                     })}
                 />
             </Card>
+
         </>
     );
 };

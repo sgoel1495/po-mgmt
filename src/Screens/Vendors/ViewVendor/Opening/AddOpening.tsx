@@ -1,14 +1,9 @@
 import React from 'react';
 import {Button, Drawer, notification} from "antd";
-import {gql, useMutation} from "@apollo/client";
+import {useMutation} from "@apollo/client";
 import {OpeningInput} from "../../../../gql/graphql";
 import OpeningForm from "@common/Forms/OpeningForm";
-
-const ADD_OPENING = gql`
-    mutation AddOpening($data: OpeningInput!, $vendorId: String!) {
-        addOpening(data: $data, vendorId: $vendorId)
-    }
-`
+import {ADD_OPENING} from "@common/gql/opening";
 
 const AddOpening = (props: { vendorId?: string, refetch: any }) => {
     const [api, contextHolder] = notification.useNotification();

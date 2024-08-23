@@ -1,30 +1,30 @@
 import React from 'react';
 import {Button, Drawer, notification} from "antd";
 import {useMutation} from "@apollo/client";
-import {ClientInput} from "../../gql/graphql";
-import ClientForm from "@common/Forms/ClientForm";
-import {CREATE_CLIENT} from "@common/gql/client";
+import {CREATE_DOCUMENT} from "@common/gql/document";
+import {DocumentInput} from "../../gql/graphql";
+import DocumentForm from "@common/Forms/DocumentForm";
 
-const CreateClient = (props: { refetch: any }) => {
+const CreateDocument = (props: { ownerId: string, refetch: any }) => {
     const [api, contextHolder] = notification.useNotification();
     const [open, setOpen] = React.useState(false);
     const formRef = React.useRef<any>(null);
-    const [addCompany, {loading, error}] = useMutation(CREATE_CLIENT);
+    const [addDocument, {loading, error}] = useMutation(CREATE_DOCUMENT);
     const showDrawer = () => {
         setOpen(true);
     };
-
     const onClose = () => {
         setOpen(false);
     };
 
-    const onSubmit = (data: ClientInput) => {
-        addCompany({
+    const onSubmit = (data: DocumentInput) => {
+        addDocument({
             variables: {
-                data: {...data, logo: data.logo && data.logo[0] ? data.logo[0].originFileObj : undefined}
+                data: {...data, file: data.file && data.file[0] ? data.file[0].originFileObj : undefined},
+                ownerId: props.ownerId
             }
         }).then((resp) => {
-            if (resp.data.addClient) {
+            if (resp.data.addDocument) {
                 setOpen(false)
                 formRef.current?.resetFields();
                 props.refetch();
@@ -56,15 +56,15 @@ const CreateClient = (props: { refetch: any }) => {
                 Create
             </Button>
             <Drawer
-                title="New Client"
+                title="New Document"
                 onClose={onClose}
                 open={open}
                 size={'large'}
             >
-                <ClientForm loading={loading} onSubmit={onSubmit} formRef={formRef}/>
+                <DocumentForm loading={loading} onSubmit={onSubmit} formRef={formRef}/>
             </Drawer>
         </>
     );
 };
 
-export default CreateClient;
+export default CreateDocument;

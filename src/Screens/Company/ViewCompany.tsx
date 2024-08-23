@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_COMPANY} from "@common/gql/company";
 import {GET_COMPANY_JOINING} from "@common/gql/joining";
+import Documents from "@common/Documents";
 
 const ViewCompany = () => {
     const params = useParams()
@@ -119,6 +120,7 @@ const ViewCompany = () => {
                     />
                 </Card>
             </div>
+            <Documents ownerId={params.id ? params.id : ""}/>
         </>
     );
 };

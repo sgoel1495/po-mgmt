@@ -3,15 +3,12 @@ import {Provider} from "react-redux";
 import {persistor, store} from "./store";
 import {PersistGate} from "redux-persist/integration/react";
 import Screens from "./Screens";
-import {ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, ServerParseError} from '@apollo/client';
+import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {graphUrl} from "@config/urls";
 import {setContext} from "@apollo/client/link/context";
 import {onError} from "@apollo/client/link/error";
 import {logout} from "@store/reducers/userSlice";
-
-const httpLink = createHttpLink({
-    uri: graphUrl,
-});
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
 const authLink = setContext((_, {headers}) => {
     // get the authentication token from local storage if it exists
@@ -32,8 +29,15 @@ const errorLink = onError(({networkError}: any) => {
         }
 });
 
+const uploadlink = createUploadLink({
+    uri: graphUrl,
+    headers: {
+        "Apollo-Require-Preflight": "true",
+    },
+})
+
 const client = new ApolloClient({
-    link: authLink.concat(errorLink).concat(httpLink),
+    link: authLink.concat(errorLink).concat(uploadlink),
     cache: new InMemoryCache(),
     defaultOptions: {
         watchQuery: {

@@ -16,7 +16,7 @@ const CreateVendor = (props: { refetch: any }) => {
     const showDrawer = () => {
         setOpen(true);
     };
-    const [companyName, setCompanyName] = useDebounceValue('', 2000)
+    const [companyName, setCompanyName] = useDebounceValue('', 1000)
 
     const onClose = () => {
         setOpen(false);

@@ -62,6 +62,7 @@ export const GET_VIEW_VENDOR = gql`
                 id
                 name
                 endClient
+                location
                 suggestedRate {
                     otRate
                     rate

@@ -25,14 +25,6 @@ const JoiningForm = (props: { onSubmit: any, formRef: any, loading: boolean, res
                        rules={[{required: true, type: 'email'}]}>
                 <Input placeholder={'Official Email'} type={'email'}/>
             </Form.Item>
-            <Card title="Project" className={'mb-5 w-full'}>
-                <Form.Item label="Name" required rules={[{required: true}]} name={'projectName'}>
-                    <Input placeholder="Name"/>
-                </Form.Item>
-                <Form.Item label="Location" required rules={[{required: true}]} name={'projectLocation'}>
-                    <Input placeholder="Project Location"/>
-                </Form.Item>
-            </Card>
             <Card title="Timesheet Approver/ Manager" className={'mb-5 w-full'}>
                 <Form.Item label="Name" required rules={[{required: true}]} name={['timesheetApprover', 'name']}>
                     <Input placeholder="Name"/>

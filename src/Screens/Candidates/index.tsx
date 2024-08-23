@@ -25,6 +25,10 @@ const Index = () => {
             dataIndex: 'name',
             key: 'name',
         }, {
+            title: 'Profile',
+            dataIndex: 'profile',
+            key: 'profile',
+        },{
             title: 'Email',
             dataIndex: 'personalEmail',
             key: 'personalEmail',
