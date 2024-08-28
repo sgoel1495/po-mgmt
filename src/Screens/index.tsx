@@ -65,7 +65,7 @@ const Index = (props: { token: any, role: string }) => {
             element: <ViewCandidate/>,
         },
         {
-            path: 'candidates/:id/timesheet',
+            path: 'candidates/:id/timesheet/:joiningId',
             element: <Timesheet/>,
         },
         {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, DatePicker, Descriptions, Select, Tabs} from "antd";
+import {Card, DatePicker, Descriptions, Form, Select, Tabs} from "antd";
 import dayjs from "dayjs";
 import TimeEntry from "./TimeEntry";
 import FormActions from "./FormActions";
@@ -17,11 +17,10 @@ type timeEntryState = {
 const WeekSelector = (props: {
     selectedDate: dayjs.Dayjs,
     timesheet: TimeSheet,
-    candidate: string,
     refetch: any,
     rate: any
 }) => {
-    const [status, setStatus] = React.useState<string | null>(null);
+    const [status, setStatus] = React.useState<string | undefined | null>(undefined);
     const [submissionDate, setSubmissionDate] = React.useState<dayjs.Dayjs | null>(null);
     const [approvalDate, setApprovalDate] = React.useState<dayjs.Dayjs | null>(null);
     const [currentTab, setCurrentTab] = React.useState(props.selectedDate.set('date', 1).format());
@@ -70,14 +69,14 @@ const WeekSelector = (props: {
     React.useEffect(() => {
         setApprovalDate(props.timesheet?.approvalDate ? dayjs(props.timesheet.approvalDate) : null)
         setSubmissionDate(props.timesheet?.submissionDate ? dayjs(props.timesheet.submissionDate) : null)
-        setStatus(props.timesheet?.status ? props.timesheet?.status : null)
+        setStatus(props.timesheet?.status)
     }, [props.timesheet])
 
     const reset = () => {
         setTimeEntry(origTimeSheet)
         setApprovalDate(props.timesheet?.approvalDate ? dayjs(props.timesheet.approvalDate) : null)
         setSubmissionDate(props.timesheet?.submissionDate ? dayjs(props.timesheet.submissionDate) : null)
-        setStatus(props.timesheet?.status ? props.timesheet?.status : null)
+        setStatus(props.timesheet?.status)
     }
     const sthours = Object.keys(timeEntry).reduce((acc, curr) => {
         let temp = acc
@@ -137,30 +136,7 @@ const WeekSelector = (props: {
             {
                 key: 'payout',
                 label: 'Total Payout',
-                children: `$${(props.rate.otRate*otHours) + (props.rate.rate*sthours)}`
-            },
-            {
-                key: 'submissionDate',
-                label: 'Submission Date',
-                children: <DatePicker value={submissionDate} onChange={setSubmissionDate}/>,
-            },
-            {
-                key: 'approvalDate',
-                label: 'Approval Date',
-                children: <DatePicker value={approvalDate} onChange={setApprovalDate}/>,
-            },
-            {
-                key: 'status',
-                label: 'Timesheet Status',
-                children: <Select
-                    placeholder={'timesheet status'}
-                    onChange={setStatus}
-                    value={status}
-                    options={[
-                        {value: TimeSheetStatus.Approved, label: 'Approved'},
-                        {value: TimeSheetStatus.Submitted, label: 'Submitted'},
-                    ]}
-                />,
+                children: `$${(props.rate.otRate * otHours) + (props.rate.rate * sthours)}`
             }
         ]
     }
@@ -179,9 +155,29 @@ const WeekSelector = (props: {
             <Descriptions
                 items={data.hours}
                 className={'mt-5 mb-5'}
-                column={5}
+                column={6}
                 bordered
             />
+            <div className={"grid grid-cols-3 gap-5 place-items-center"}>
+                <Form.Item label={"Submission Date"}>
+                    <DatePicker value={submissionDate} onChange={setSubmissionDate}/>
+                </Form.Item>
+                <Form.Item label={"Approval Date"}>
+                    <DatePicker value={approvalDate} onChange={setApprovalDate}/>
+                </Form.Item>
+                <Form.Item label={"Timesheet Status"}>
+                    <Select
+                        placeholder={'timesheet status'}
+                        onChange={setStatus}
+                        value={status}
+                        options={[
+                            {value: TimeSheetStatus.Approved, label: 'Approved'},
+                            {value: TimeSheetStatus.Submitted, label: 'Submitted'},
+                        ]}
+                    />
+                </Form.Item>
+            </div>
+
             <Tabs
                 tabPosition={'top'}
                 type={'card'}
@@ -191,14 +187,15 @@ const WeekSelector = (props: {
                         timeSheetId={props.timesheet?.id?.toString()}
                         reset={reset}
                         timeEntry={timeEntry}
-                        month={dayjs(currentTab).month()}
-                        candidate={props.candidate}
+                        month={dayjs(currentTab).format("YYYY-MM-DD")}
                         refetch={props.refetch}
                         approvalDate={approvalDate}
                         submissionDate={submissionDate}
                         status={status}
                     /> :
-                    <PdfActions/>
+                    <PdfActions
+                        timeSheetId={props.timesheet?.id?.toString()}
+                    />
                 }
             />
         </Card>

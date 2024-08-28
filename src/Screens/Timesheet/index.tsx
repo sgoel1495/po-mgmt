@@ -5,38 +5,11 @@ import MonthSelector from "./MonthSelector";
 import WeekSelector from "./WeekSelector";
 import dayjs from "dayjs";
 import {Descriptions} from "antd";
-
-const GET_CANDIDATE = gql`
-    query QueryBasicCandidateById($id: ObjectID) {
-        candidate(id: $id) {
-            name
-#            empId
-#            actualStartDate
-#            client {
-#                id
-#                companyName
-#            }
-#            vendor {
-#                id
-#                name
-#            },
-#            projectName
-#            projectLocation
-#            timesheetApprover {
-#                name
-#                email
-#            }
-#            candidateRate {
-#                otRate
-#                rate
-#            }
-        }
-    }
-`
+import {GET_CANDIDATE_JOINING} from "@common/gql/joining";
 
 const GET_TIMESHEET = gql`
-    query QueryTimeSheet($month: Int, $candidate: ID) {
-        getTimeSheet(month: $month, candidate: $candidate) {
+    query QueryTimeSheet($month: String, $joining: ID) {
+        getTimeSheet(month: $month, joining: $joining) {
             id
             timeSheet {
                 date
@@ -55,15 +28,17 @@ const Index = () => {
     const params = useParams()
     const [selected, setSelected] = React.useState<dayjs.Dayjs>(dayjs())
 
-    const {loading, error, data} = useQuery(GET_CANDIDATE, {
-        variables: {id: params.id},
+    const {loading, error, data} = useQuery(GET_CANDIDATE_JOINING, {
+        variables: {candidateId: params.id},
     });
     const {data: timesheet, refetch} = useQuery(GET_TIMESHEET, {
-        variables: {month: selected.month(), candidate: params.id},
+        variables: {month: selected.set("date", 1).format("YYYY-MM-DD"), joining: params.joiningId},
     });
 
     if (loading)
         return <></>
+
+    const joining = data.joiningByCandidate?.joinings.find((item: any) => item.joining.id === params.joiningId);
 
     const items = {
         data: [
@@ -72,47 +47,47 @@ const Index = () => {
             {
                 key: 'empID',
                 label: 'Emp ID',
-                children: data.candidate['empId'],
+                children: joining.joining['empId'],
             },
             {
                 key: 'name',
                 label: 'Name',
-                children: data.candidate['name'],
+                children: data.joiningByCandidate.candidate['name'],
             },
             {
                 key: 'actualStartDate',
                 label: 'Start Date',
-                children: data.candidate['actualStartDate'],
+                children: joining.joining['actualStartDate'],
             },
             {
                 key: 'vendor',
                 label: 'Vendor',
-                children: data.candidate['vendor']['name'],
+                children: joining.joining['vendor']['name'],
             },
             {
                 key: 'companyName',
                 label: 'Client',
-                children: data.candidate['client']['companyName'],
+                children: joining.joining['client']['companyName'],
             },
             {
                 key: 'projectName',
                 label: 'Project Name',
-                children: data.candidate['projectName'],
+                children: joining.opening['endClient'],
             },
             {
                 key: 'projectLocation',
                 label: 'Project Location',
-                children: data.candidate['projectLocation'],
+                children: joining.opening['location'],
             },
             {
                 key: 'timesheetApproverName',
                 label: 'Approver Name',
-                children: data.candidate['timesheetApprover']?.name,
+                children: joining.joining['timesheetApprover']?.name,
             },
             {
                 key: 'timesheetApproverEmail',
                 label: 'Approver Email',
-                children: data.candidate['timesheetApprover']?.email,
+                children: joining.joining['timesheetApprover']?.email,
             },
         ],
 
@@ -123,10 +98,10 @@ const Index = () => {
             <div className={'mb-4'}>
                 <Descriptions items={items.data} bordered column={4} title={'Candidate Info'}/>
             </div>
-            <MonthSelector startDate={data.candidate.actualStartDate} setSelected={setSelected} selected={selected}
+            <MonthSelector startDate={joining.joining['actualStartDate']} setSelected={setSelected} selected={selected}
                            timesheet={timesheet?.getTimeSheet?.timeSheet}/>
-            <WeekSelector selectedDate={selected} timesheet={timesheet?.getTimeSheet}
-                          candidate={params.id ? params.id : ''} refetch={refetch} rate={data.candidate.candidateRate}/>
+            <WeekSelector selectedDate={selected} timesheet={timesheet?.getTimeSheet} refetch={refetch}
+                          rate={joining.joining.candidateRate}/>
         </div>
     );
 };

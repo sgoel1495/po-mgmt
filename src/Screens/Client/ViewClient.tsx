@@ -42,6 +42,11 @@ const ViewClient = (props: { token: string }) => {
                         key: 'logo',
                         label: 'Logo',
                         children: <img src={logo} alt={'logo'} style={{height:'100px'}} />
+                    },
+                    {
+                        key: 'timeSheetFormat',
+                        label: 'TimeSheet Format',
+                        children: data.client['timeSheetFormat']
                     }
                 ],
                 address: [

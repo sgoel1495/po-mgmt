@@ -1,14 +1,13 @@
 import React from 'react';
 import {useQuery} from "@apollo/client";
-import {useNavigate, useParams} from "react-router-dom";
-import {Button, Card, Descriptions, Tabs} from "antd";
-import dayjs from "dayjs";
+import {useParams} from "react-router-dom";
+import {Card, Descriptions, Tabs} from "antd";
 import {GET_CANDIDATE_JOINING} from "@common/gql/joining";
 import JoiningDetails from "./JoiningDetails";
 
 const ViewCandidate = () => {
     const params = useParams()
-    const navigate = useNavigate();
+
     const {loading, data: allData} = useQuery(GET_CANDIDATE_JOINING, {
         variables: {candidateId: params.id},
     });
@@ -75,17 +74,17 @@ const ViewCandidate = () => {
         <div>
             <div className={'flex justify-between items-center'}>
                 <span className={'text-2xl font-semibold'}>Candidate Info</span>
-                {/*{*/}
-                {/*    dayjs(data.candidate?.actualStartDate).isBefore(dayjs()) &&*/}
-                {/*    <Button type={'primary'} onClick={() => navigate('timesheet')}>TimeSheets</Button>*/}
-                {/*}*/}
             </div>
             <div className={'flex gap-5 my-5'}>
                 <Card title="Personal Info" type={'inner'}>
                     <Descriptions items={items.personal} layout={'vertical'} column={4}/>
                 </Card>
             </div>
-            <Tabs defaultActiveKey="1" items={tabs} type="card"/>
+            <Tabs
+                defaultActiveKey="1"
+                items={tabs}
+                type="card"
+            />
         </div>
     );
 };

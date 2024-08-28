@@ -254,6 +254,7 @@ export type Client = {
   signingAuthDesignation?: Maybe<Scalars['String']['output']>;
   signingAuthEmail?: Maybe<Scalars['EmailAddress']['output']>;
   signingAuthName?: Maybe<Scalars['String']['output']>;
+  timeSheetFormat?: Maybe<Scalars['String']['output']>;
 };
 
 export type ClientInput = {
@@ -265,6 +266,7 @@ export type ClientInput = {
   signingAuthDesignation?: InputMaybe<Scalars['String']['input']>;
   signingAuthEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
   signingAuthName?: InputMaybe<Scalars['String']['input']>;
+  timeSheetFormat?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Company = {
@@ -398,6 +400,8 @@ export type Mutation = {
   deleteDocument?: Maybe<Scalars['String']['output']>;
   deleteSecret?: Maybe<Scalars['String']['output']>;
   deleteUser?: Maybe<Scalars['String']['output']>;
+  downloadTimesheet?: Maybe<Scalars['String']['output']>;
+  generateTimesheet?: Maybe<Scalars['String']['output']>;
   updateCandidate?: Maybe<Scalars['String']['output']>;
   updateClient?: Maybe<Scalars['String']['output']>;
   updateCompany?: Maybe<Scalars['String']['output']>;
@@ -471,6 +475,16 @@ export type MutationDeleteSecretArgs = {
 
 export type MutationDeleteUserArgs = {
   username: Scalars['String']['input'];
+};
+
+
+export type MutationDownloadTimesheetArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type MutationGenerateTimesheetArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -549,6 +563,12 @@ export type OpeningInput = {
   suggestedRate?: InputMaybe<RateInput>;
 };
 
+export type Options = {
+  __typename?: 'Options';
+  label?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars['String']['output']>;
+};
+
 export type PaginatedCandidate = {
   __typename?: 'PaginatedCandidate';
   results?: Maybe<Array<Candidate>>;
@@ -621,6 +641,7 @@ export type Query = {
   company?: Maybe<Company>;
   documents?: Maybe<PaginatedDocuments>;
   getTimeSheet?: Maybe<TimeSheet>;
+  getTimeSheetFormats?: Maybe<Array<Maybe<Options>>>;
   joining?: Maybe<Joining>;
   joiningByBank?: Maybe<Array<Maybe<CompanyJoining>>>;
   joiningByCandidate?: Maybe<CandidateJoining>;
@@ -678,8 +699,8 @@ export type QueryDocumentsArgs = {
 
 
 export type QueryGetTimeSheetArgs = {
-  candidate?: InputMaybe<Scalars['ID']['input']>;
-  month?: InputMaybe<Scalars['Int']['input']>;
+  joining?: InputMaybe<Scalars['ID']['input']>;
+  month?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -771,9 +792,9 @@ export enum Roles {
 export type TimeSheet = {
   __typename?: 'TimeSheet';
   approvalDate?: Maybe<Scalars['Date']['output']>;
-  candidate?: Maybe<Candidate>;
   id?: Maybe<Scalars['ID']['output']>;
-  month?: Maybe<Scalars['Int']['output']>;
+  joining?: Maybe<Joining>;
+  month?: Maybe<Scalars['String']['output']>;
   status?: Maybe<TimeSheetStatus>;
   submissionDate?: Maybe<Scalars['Date']['output']>;
   timeSheet?: Maybe<Array<DayTime>>;
@@ -781,9 +802,9 @@ export type TimeSheet = {
 
 export type TimeSheetInput = {
   approvalDate?: InputMaybe<Scalars['Date']['input']>;
-  candidate?: InputMaybe<Scalars['ObjectID']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
-  month?: InputMaybe<Scalars['Int']['input']>;
+  joining?: InputMaybe<Scalars['ObjectID']['input']>;
+  month?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TimeSheetStatus>;
   submissionDate?: InputMaybe<Scalars['Date']['input']>;
   timeSheet?: InputMaybe<Array<DayTimeInput>>;
@@ -905,16 +926,9 @@ export type UpdateTimeSheetMutationVariables = Exact<{
 
 export type UpdateTimeSheetMutation = { __typename?: 'Mutation', updateTimeSheet?: string | null };
 
-export type QueryBasicCandidateByIdQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ObjectID']['input']>;
-}>;
-
-
-export type QueryBasicCandidateByIdQuery = { __typename?: 'Query', candidate?: { __typename?: 'Candidate', name?: string | null } | null };
-
 export type QueryTimeSheetQueryVariables = Exact<{
-  month?: InputMaybe<Scalars['Int']['input']>;
-  candidate?: InputMaybe<Scalars['ID']['input']>;
+  month?: InputMaybe<Scalars['String']['input']>;
+  joining?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
@@ -957,8 +971,7 @@ export const SearchCompanyDocument = {"kind":"Document","definitions":[{"kind":"
 export const QueryCompanyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryCompany"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"ownerName"}},{"kind":"Field","name":{"kind":"Name","value":"addressLine1"}},{"kind":"Field","name":{"kind":"Name","value":"bank"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bankName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryCompanyQuery, QueryCompanyQueryVariables>;
 export const LoginQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoginQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<LoginQueryQuery, LoginQueryQueryVariables>;
 export const UpdateTimeSheetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTimeSheet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"TimeSheetInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTimeSheet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<UpdateTimeSheetMutation, UpdateTimeSheetMutationVariables>;
-export const QueryBasicCandidateByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryBasicCandidateById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ObjectID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"candidate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<QueryBasicCandidateByIdQuery, QueryBasicCandidateByIdQueryVariables>;
-export const QueryTimeSheetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryTimeSheet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"month"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"candidate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTimeSheet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"month"},"value":{"kind":"Variable","name":{"kind":"Name","value":"month"}}},{"kind":"Argument","name":{"kind":"Name","value":"candidate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"candidate"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timeSheet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"standardHours"}},{"kind":"Field","name":{"kind":"Name","value":"OTHours"}}]}},{"kind":"Field","name":{"kind":"Name","value":"submissionDate"}},{"kind":"Field","name":{"kind":"Name","value":"approvalDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<QueryTimeSheetQuery, QueryTimeSheetQueryVariables>;
+export const QueryTimeSheetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryTimeSheet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"month"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"joining"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTimeSheet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"month"},"value":{"kind":"Variable","name":{"kind":"Name","value":"month"}}},{"kind":"Argument","name":{"kind":"Name","value":"joining"},"value":{"kind":"Variable","name":{"kind":"Name","value":"joining"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timeSheet"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"standardHours"}},{"kind":"Field","name":{"kind":"Name","value":"OTHours"}}]}},{"kind":"Field","name":{"kind":"Name","value":"submissionDate"}},{"kind":"Field","name":{"kind":"Name","value":"approvalDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<QueryTimeSheetQuery, QueryTimeSheetQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"role"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"role"},"value":{"kind":"Variable","name":{"kind":"Name","value":"role"}}}]}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
 export const QueryUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNum"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNum"}}},{"kind":"Argument","name":{"kind":"Name","value":"pageSize"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<QueryUserQuery, QueryUserQueryVariables>;

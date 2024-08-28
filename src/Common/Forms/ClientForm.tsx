@@ -1,13 +1,17 @@
 import React from 'react';
-import {Button, Card, Form, Input, Upload} from "antd";
+import {Button, Card, Form, Input, Select, Upload} from "antd";
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import {connect} from "react-redux";
+import {useQuery} from "@apollo/client";
+import {GET_TIMESHEET_FORMATS} from "@common/gql/client";
+import FileField from "@common/Forms/Fields/FileField";
 
 const ClientForm = (props: { loading: boolean, onSubmit: any, formRef: any, reset?: any, token: string }) => {
     const {onSubmit, formRef, loading} = props;
     const [form] = Form.useForm();
     const logoObj = Form.useWatch('logo', form);
     const [logo, setLogo] = React.useState<any>(undefined);
+    const {data} = useQuery(GET_TIMESHEET_FORMATS)
     const uploadButton = (
         <button style={{border: 0, background: 'none'}} type="button">
             {loading ? <LoadingOutlined/> : <PlusOutlined/>}
@@ -20,6 +24,7 @@ const ClientForm = (props: { loading: boolean, onSubmit: any, formRef: any, rese
         }
         return [e?.fileList[0]];
     };
+
 
     React.useEffect(() => {
         if (logoObj && logoObj[0].url) {
@@ -39,19 +44,13 @@ const ClientForm = (props: { loading: boolean, onSubmit: any, formRef: any, rese
     }, [logoObj])
 
     return (
-        <Form onFinish={onSubmit} layout="vertical" form={form} ref={formRef} onChange={(e)=>console.log(e)}>
+        <Form onFinish={onSubmit} layout="vertical" form={form} ref={formRef} onChange={(e) => console.log(e)}>
             <Form.Item label="Client Name" required name={'companyName'} rules={[{required: true}]}>
                 <Input placeholder="Client Name"/>
             </Form.Item>
-            <Form.Item label={"logo"} name={"logo"} valuePropName="fileList" getValueFromEvent={normFile}>
-                <Upload
-                    name="logo"
-                    listType="picture-card"
-                    showUploadList={false}
-                    beforeUpload={() => false}
-                >
-                    {logo ? <img src={logo} alt="avatar" style={{width: '100%'}}/> : uploadButton}
-                </Upload>
+            <FileField name={'logo'} form={form} title={'Logo'} required={false}/>
+            <Form.Item name={"timeSheetFormat"} label={'TimeSheet Format'}>
+                <Select options={data?.getTimeSheetFormats}/>
             </Form.Item>
             <Card title="Signing Authority" className={'mb-5 w-full'}>
                 <Form.Item label="Name" name={'signingAuthName'}>

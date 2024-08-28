@@ -23,6 +23,7 @@ export const GET_CLIENT = gql`
             addressLine1
             addressLine2
             addressLine3
+            timeSheetFormat
         }
     }
 `
@@ -48,6 +49,15 @@ export const SEARCH_CLIENT = gql`
         searchClient(name: $data){
             id
             companyName
+        }
+    }
+`
+
+export const GET_TIMESHEET_FORMATS = gql`
+    query GetTimesheetsFormats {
+        getTimeSheetFormats{
+            value
+            label
         }
     }
 `
