@@ -4,7 +4,7 @@ import Documents from "@common/Documents";
 import dayjs from "dayjs";
 import {useNavigate} from "react-router-dom";
 
-const JoiningDetails = (props: { joining: any, opening:any }) => {
+const JoiningDetails = (props: { joining: any, opening: any }) => {
     const navigate = useNavigate();
     const items = {
         workInfo: [
@@ -57,7 +57,21 @@ const JoiningDetails = (props: { joining: any, opening:any }) => {
                 key: 'companyName',
                 label: 'Company Name',
                 children: props.joining.company.companyName
+            },
+            {
+                key: 'paymentTerms',
+                label: 'Payment Terms',
+                children: props.joining.paymentTerms + " Days"
+            },
+            {
+                key: 'timesheet',
+                label: 'Timesheet',
+                children:
+                    dayjs(props.joining['actualStartDate']).isBefore(dayjs()) &&
+                    <Button type={'primary'}
+                            onClick={() => navigate('timesheet/' + props.joining.id)}>TimeSheets</Button>
             }
+
         ],
         vendorRate: [
             {
@@ -98,7 +112,7 @@ const JoiningDetails = (props: { joining: any, opening:any }) => {
                 children: props.joining.timesheetApprover?.email
             }
         ],
-        vendorSpoc :[
+        vendorSpoc: [
             {
                 key: 'name',
                 label: 'Name',
@@ -115,7 +129,7 @@ const JoiningDetails = (props: { joining: any, opening:any }) => {
                 children: props.joining.vendorSpoc['phone']
             }
         ],
-        vendorAcctSpoc :[
+        vendorAcctSpoc: [
             {
                 key: 'name',
                 label: 'Name',
@@ -136,10 +150,6 @@ const JoiningDetails = (props: { joining: any, opening:any }) => {
 
     return (
         <div>
-            {
-                dayjs(props.joining['actualStartDate']).isBefore(dayjs()) &&
-                <Button type={'primary'} onClick={() => navigate('timesheet/'+props.joining.id)}>TimeSheets</Button>
-            }
             <Descriptions items={items.workInfo} layout={'vertical'} column={5} bordered/>
             <div className={'flex gap-5 my-5'}>
                 <Card type={'inner'} title={'Vendor Rate'}>

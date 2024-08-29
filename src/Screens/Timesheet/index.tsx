@@ -55,6 +55,16 @@ const Index = () => {
                 children: data.joiningByCandidate.candidate['name'],
             },
             {
+                key: 'paymentTerms',
+                label: 'Payment Terms',
+                children: joining.joining['paymentTerms']+ " Days",
+            },
+            {
+                key: 'company',
+                label: 'Company',
+                children: joining.joining['company']['companyName'],
+            },
+            {
                 key: 'actualStartDate',
                 label: 'Start Date',
                 children: joining.joining['actualStartDate'],
