@@ -5,3 +5,9 @@ export const GENERATE_TIMESHEET = gql`
         generateTimesheet(id: $id)
     }
 `
+
+export const GENERATE_INVOICE = gql`
+    mutation GENERATE_INVOICE($id: ID){
+        generateInvoice(id: $id)
+    }
+`

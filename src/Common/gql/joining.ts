@@ -81,6 +81,10 @@ export const GET_CANDIDATE_JOINING = gql`
                         email
                         phone
                     }
+                    invoices {
+                        name
+                        month
+                    }
                 }
                 opening {
                     name

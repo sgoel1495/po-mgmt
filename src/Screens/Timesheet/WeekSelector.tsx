@@ -18,7 +18,8 @@ const WeekSelector = (props: {
     selectedDate: dayjs.Dayjs,
     timesheet: TimeSheet,
     refetch: any,
-    rate: any
+    rate: any,
+    invoiceNames: any[]
 }) => {
     const [status, setStatus] = React.useState<string | undefined | null>(undefined);
     const [submissionDate, setSubmissionDate] = React.useState<dayjs.Dayjs | null>(null);
@@ -193,9 +194,12 @@ const WeekSelector = (props: {
                         submissionDate={submissionDate}
                         status={status}
                     /> :
-                    <PdfActions
-                        timeSheetId={props.timesheet?.id?.toString()}
-                    />
+                    props.timesheet?.status && props.timesheet?.approvalDate && props.timesheet?.submissionDate ?
+                        <PdfActions
+                            timeSheetId={props.timesheet?.id?.toString()}
+                            invoiceName={props.invoiceNames ? props.invoiceNames.find((item: any) => item.month === dayjs(currentTab).format("YYYY-MM-DD")).name : ''}
+                        />
+                        : undefined
                 }
             />
         </Card>

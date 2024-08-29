@@ -101,7 +101,7 @@ const Index = () => {
             <MonthSelector startDate={joining.joining['actualStartDate']} setSelected={setSelected} selected={selected}
                            timesheet={timesheet?.getTimeSheet?.timeSheet}/>
             <WeekSelector selectedDate={selected} timesheet={timesheet?.getTimeSheet} refetch={refetch}
-                          rate={joining.joining.candidateRate}/>
+                          rate={joining.joining.candidateRate} invoiceNames={joining.joining.invoices}/>
         </div>
     );
 };
