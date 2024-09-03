@@ -1,7 +1,9 @@
 import React from 'react';
 import dayjs from "dayjs";
 import {InputNumber} from "antd";
+import isBetween from 'dayjs/plugin/isBetween'
 
+dayjs.extend(isBetween);
 type timeEntryState = {
     [x: string]: {
         ot?: number;
@@ -21,7 +23,7 @@ const TimeEntry = (props: {
     const dateContainer = 'border grid place-items-center py-4';
     const timeText = 'text-lg font-semibold'
     const timeInput = `w-full ${dateContainer} center-input rounded-none border-[#e5e7eb]`
-    const timeEntryKeys = Object.keys(props.timeEntry)
+    const timeEntryKeys = Object.keys(props.timeEntry).filter((date) => dayjs(date).isBetween(props.startDate, props.endDate, 'date', '[]'))
     const stTotal = timeEntryKeys.reduce((acc, curr) => {
         let st = 0;
         if (props.timeEntry[curr].st) { // @ts-ignore
