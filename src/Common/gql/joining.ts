@@ -137,6 +137,8 @@ export const GET_JOINING = gql`
                 email
                 phone
             }
+            invoiceFormat
+            fixedMonthDate
         }
     }
 `
