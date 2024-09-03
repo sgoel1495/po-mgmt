@@ -77,6 +77,7 @@ export const GET_VIEW_VENDOR = gql`
                         rate
                     }
                     paymentTerms
+                    fixedMonthDate
                     actualStartDate
                     joiningDate
                 }

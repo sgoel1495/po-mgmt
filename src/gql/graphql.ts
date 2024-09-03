@@ -337,6 +337,7 @@ export type Joining = {
   client: Client;
   company?: Maybe<Company>;
   empId?: Maybe<Scalars['String']['output']>;
+  fixedMonthDate?: Maybe<Scalars['Boolean']['output']>;
   id?: Maybe<Scalars['ObjectID']['output']>;
   invoiceFormat?: Maybe<Scalars['String']['output']>;
   invoices?: Maybe<Array<Maybe<Invoices>>>;
@@ -357,6 +358,7 @@ export type JoiningInput = {
   client: Scalars['ObjectID']['input'];
   company?: InputMaybe<Scalars['ObjectID']['input']>;
   empId?: InputMaybe<Scalars['String']['input']>;
+  fixedMonthDate?: InputMaybe<Scalars['Boolean']['input']>;
   invoiceFormat?: InputMaybe<Scalars['String']['input']>;
   joiningDate?: InputMaybe<Scalars['Date']['input']>;
   officialEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
@@ -380,6 +382,7 @@ export type JoiningUpdateInput = {
   candidateRate: RateInput;
   company?: InputMaybe<Scalars['ObjectID']['input']>;
   empId?: InputMaybe<Scalars['String']['input']>;
+  fixedMonthDate?: InputMaybe<Scalars['Boolean']['input']>;
   invoiceFormat?: InputMaybe<Scalars['String']['input']>;
   joiningDate?: InputMaybe<Scalars['Date']['input']>;
   officialEmail?: InputMaybe<Scalars['EmailAddress']['input']>;

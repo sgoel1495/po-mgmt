@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, DatePicker, Form, Input, InputNumber, Select} from "antd";
+import {Button, Card, Checkbox, DatePicker, Form, Input, InputNumber, Select} from "antd";
 import CandidateField from "@common/Forms/Fields/CandidateField";
 import CompanyField from "@common/Forms/Fields/CompanyField";
 import {useQuery} from "@apollo/client";
@@ -7,13 +7,15 @@ import {GET_INVOICE_FORMATS} from "@common/gql/company";
 
 const JoiningForm = (props: { onSubmit: any, formRef: any, loading: boolean, reset?: any, defaultValue?: any }) => {
     const {onSubmit, formRef, loading} = props;
+    const [form] = Form.useForm();
+    const [refresh, setRefresh] = React.useState(false);
     const {data} = useQuery(GET_INVOICE_FORMATS)
     return (
-        <Form onFinish={onSubmit} layout="vertical" ref={formRef}>
+        <Form onFinish={onSubmit} layout="vertical" ref={formRef} form={form}>
             <Form.Item label={'EMP ID'} name={'empId'} required rules={[{required: true}]}>
                 <Input placeholder={'EMP ID'}/>
             </Form.Item>
-            <CandidateField defaultValue={props.defaultValue?.candidate} />
+            <CandidateField defaultValue={props.defaultValue?.candidate}/>
             <CompanyField defaultValue={props.defaultValue?.company}/>
             <Form.Item name={"invoiceFormat"} label={'Invoice Format'}>
                 <Select options={data?.getInvoiceFormats}/>
@@ -24,8 +26,12 @@ const JoiningForm = (props: { onSubmit: any, formRef: any, loading: boolean, res
             <Form.Item label={'Actual Start Date'} name={'actualStartDate'} required rules={[{required: true}]}>
                 <DatePicker/>
             </Form.Item>
-            <Form.Item label={'Payment Terms'} name={'paymentTerms'} required rules={[{required: true}]}>
-                <InputNumber placeholder={'Payment Terms'} className={'w-full'} addonAfter={"Days"}/>
+            <Form.Item label={'Payment Terms / Date'} name={'paymentTerms'} required rules={[{required: true}]}>
+                <InputNumber placeholder={'Payment Terms'} className={'w-full'}
+                             addonAfter={form.getFieldValue('fixedMonthDate') ? "Of Every Month" : "Days"}/>
+            </Form.Item>
+            <Form.Item name={"fixedMonthDate"} valuePropName="checked">
+                <Checkbox onChange={(e)=>setRefresh(e.target.checked)}>Set due date for invoice as a Fixed date of every month</Checkbox>
             </Form.Item>
             <Form.Item label={'Official Email'} name={'officialEmail'} required
                        rules={[{required: true, type: 'email'}]}>

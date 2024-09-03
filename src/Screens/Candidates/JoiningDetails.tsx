@@ -54,6 +54,11 @@ const JoiningDetails = (props: { joining: any, opening: any }) => {
                 children: props.joining['actualStartDate']
             },
             {
+                key: 'invoiceFormat',
+                label: 'Invoice Format',
+                children: props.joining['invoiceFormat']
+            },
+            {
                 key: 'companyName',
                 label: 'Company Name',
                 children: props.joining.company.companyName
@@ -61,7 +66,7 @@ const JoiningDetails = (props: { joining: any, opening: any }) => {
             {
                 key: 'paymentTerms',
                 label: 'Payment Terms',
-                children: props.joining.paymentTerms + " Days"
+                children: props.joining.paymentTerms + (props.joining.fixedMonthDate ? " of every month" : " days")
             },
             {
                 key: 'timesheet',

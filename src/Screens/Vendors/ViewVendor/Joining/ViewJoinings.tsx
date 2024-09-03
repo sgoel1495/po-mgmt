@@ -31,6 +31,9 @@ const ViewJoinings = (props: { data: any[], refetch: any }) => {
             title: 'Payment Terms',
             dataIndex: 'paymentTerms',
             key: 'paymentTerms',
+            render: (text: any, row: any) => {
+                return text + (row.fixedMonthDate ? " of every month" : " days")
+            }
         }, {
             title: 'Actions',
             dataIndex: 'candidate',
