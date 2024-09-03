@@ -1,10 +1,13 @@
 import React from 'react';
-import {Button, Card, DatePicker, Form, Input, InputNumber} from "antd";
+import {Button, Card, DatePicker, Form, Input, InputNumber, Select} from "antd";
 import CandidateField from "@common/Forms/Fields/CandidateField";
 import CompanyField from "@common/Forms/Fields/CompanyField";
+import {useQuery} from "@apollo/client";
+import {GET_INVOICE_FORMATS} from "@common/gql/company";
 
 const JoiningForm = (props: { onSubmit: any, formRef: any, loading: boolean, reset?: any, defaultValue?: any }) => {
     const {onSubmit, formRef, loading} = props;
+    const {data} = useQuery(GET_INVOICE_FORMATS)
     return (
         <Form onFinish={onSubmit} layout="vertical" ref={formRef}>
             <Form.Item label={'EMP ID'} name={'empId'} required rules={[{required: true}]}>
@@ -12,6 +15,9 @@ const JoiningForm = (props: { onSubmit: any, formRef: any, loading: boolean, res
             </Form.Item>
             <CandidateField defaultValue={props.defaultValue?.candidate} />
             <CompanyField defaultValue={props.defaultValue?.company}/>
+            <Form.Item name={"invoiceFormat"} label={'Invoice Format'}>
+                <Select options={data?.getInvoiceFormats}/>
+            </Form.Item>
             <Form.Item label={'Joining Date'} name={'joiningDate'} required rules={[{required: true}]}>
                 <DatePicker/>
             </Form.Item>

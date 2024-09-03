@@ -29,11 +29,6 @@ const ViewCompany = () => {
                         children: data.company['ownerName']
                     },
                     {
-                        key: 'invoiceFormat',
-                        label: 'Invoice Format',
-                        children: data.company['invoiceFormat']
-                    },
-                    {
                         key: 'address',
                         label: 'Address',
                         children: <>

@@ -323,6 +323,12 @@ export type Documents = {
   ownerId?: Maybe<Scalars['ObjectID']['output']>;
 };
 
+export type Invoices = {
+  __typename?: 'Invoices';
+  month?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
 export type Joining = {
   __typename?: 'Joining';
   actualStartDate?: Maybe<Scalars['Date']['output']>;
@@ -332,6 +338,8 @@ export type Joining = {
   company?: Maybe<Company>;
   empId?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['ObjectID']['output']>;
+  invoiceFormat?: Maybe<Scalars['String']['output']>;
+  invoices?: Maybe<Array<Maybe<Invoices>>>;
   joiningDate?: Maybe<Scalars['Date']['output']>;
   officialEmail?: Maybe<Scalars['EmailAddress']['output']>;
   paymentTerms?: Maybe<Scalars['Int']['output']>;
@@ -349,6 +357,7 @@ export type JoiningInput = {
   client: Scalars['ObjectID']['input'];
   company?: InputMaybe<Scalars['ObjectID']['input']>;
   empId?: InputMaybe<Scalars['String']['input']>;
+  invoiceFormat?: InputMaybe<Scalars['String']['input']>;
   joiningDate?: InputMaybe<Scalars['Date']['input']>;
   officialEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
   paymentTerms?: InputMaybe<Scalars['Int']['input']>;
@@ -371,6 +380,7 @@ export type JoiningUpdateInput = {
   candidateRate: RateInput;
   company?: InputMaybe<Scalars['ObjectID']['input']>;
   empId?: InputMaybe<Scalars['String']['input']>;
+  invoiceFormat?: InputMaybe<Scalars['String']['input']>;
   joiningDate?: InputMaybe<Scalars['Date']['input']>;
   officialEmail?: InputMaybe<Scalars['EmailAddress']['input']>;
   paymentTerms?: InputMaybe<Scalars['Int']['input']>;
@@ -400,7 +410,7 @@ export type Mutation = {
   deleteDocument?: Maybe<Scalars['String']['output']>;
   deleteSecret?: Maybe<Scalars['String']['output']>;
   deleteUser?: Maybe<Scalars['String']['output']>;
-  downloadTimesheet?: Maybe<Scalars['String']['output']>;
+  generateInvoice?: Maybe<Scalars['String']['output']>;
   generateTimesheet?: Maybe<Scalars['String']['output']>;
   updateCandidate?: Maybe<Scalars['String']['output']>;
   updateClient?: Maybe<Scalars['String']['output']>;
@@ -478,7 +488,7 @@ export type MutationDeleteUserArgs = {
 };
 
 
-export type MutationDownloadTimesheetArgs = {
+export type MutationGenerateInvoiceArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -640,6 +650,7 @@ export type Query = {
   companies: PaginatedCompany;
   company?: Maybe<Company>;
   documents?: Maybe<PaginatedDocuments>;
+  getInvoiceFormats?: Maybe<Array<Maybe<Options>>>;
   getTimeSheet?: Maybe<TimeSheet>;
   getTimeSheetFormats?: Maybe<Array<Maybe<Options>>>;
   joining?: Maybe<Joining>;

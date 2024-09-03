@@ -16,7 +16,6 @@ export const GET_COMPANY = gql`
     query GetCompany($id: ObjectID) {
         company(id: $id) {
             companyName
-            invoiceFormat
             ownerName
             addressLine1
             addressLine2

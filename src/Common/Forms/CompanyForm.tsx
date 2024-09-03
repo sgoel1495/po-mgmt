@@ -1,11 +1,8 @@
 import React from 'react';
-import {Button, Card, Form, Input, Select} from "antd";
-import {useQuery} from "@apollo/client";
-import {GET_INVOICE_FORMATS} from "@common/gql/company";
+import {Button, Card, Form, Input} from "antd";
 
 const CompanyForm = (props: { loading: boolean, onSubmit: any, formRef: any, reset?: any }) => {
     const {onSubmit, formRef, loading} = props;
-    const {data} = useQuery(GET_INVOICE_FORMATS)
     return (
         <Form onFinish={onSubmit} layout="vertical" ref={formRef}>
             <Form.Item label="Company Name" required rules={[{required: true}]} name={'companyName'}>
@@ -13,9 +10,6 @@ const CompanyForm = (props: { loading: boolean, onSubmit: any, formRef: any, res
             </Form.Item>
             <Form.Item label="Owner Name" name={'ownerName'}>
                 <Input placeholder="Owner Name"/>
-            </Form.Item>
-            <Form.Item name={"invoiceFormat"} label={'Invoice Format'}>
-                <Select options={data?.getInvoiceFormats}/>
             </Form.Item>
             <Card title="Address" className={'mb-5 w-full'}>
                 <Form.Item label="Line 1" required rules={[{required: true}]} name={'addressLine1'}>
